@@ -1,25 +1,13 @@
+using BackendCore.Lib.Data;
+using BackendCore.Lib.Extensions;
+using BackendCore.Lib.Models;
+using BackendCore.Lib.Services;
+using BackendGobiernoIT.Data;
+
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+builder.AddBackendCore<ApplicationDbContext, CoreUser, CoreUserManager>(o =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
+});
+var app = builder.Build();
+app.ConfigBackendCore();
 app.Run();

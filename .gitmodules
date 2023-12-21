@@ -1,0 +1,3 @@
+[submodule "BackendCore"]
+	path = BackendCore
+	url = git@github.com:nutecsi/BackendCore.git
