@@ -21,6 +21,8 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
     public DbSet<CompanyUser> CompanyUsers { get; set; }
     public DbSet<EmailInfo> EmailsInfo { get; set; }
     public DbSet<Device> Devices { get; set; }
+    public DbSet<Case> Cases { get; set; }
+    public DbSet<FollowUp> FollowUps { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -38,6 +40,16 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
            .HasForeignKey(cu => cu.WorkCenterId)
            .OnDelete(DeleteBehavior.NoAction);
 
+        modelBuilder.Entity<Case>()
+           .HasOne(cu => cu.DependantTask)
+           .WithMany()
+           .HasForeignKey(cu => cu.DependantTaskId)
+           .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<Case>()
+            .Property(b => b.CreationDate)
+            .HasDefaultValueSql("GETUTCDATE()");
+
 
         modelBuilder.Entity<TableData>().HasData(
             new TableData { Id = "Companies", Name = "Companies", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
@@ -46,8 +58,9 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
             new TableData { Id = "WorkCenters", Name = "WorkCenters", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
             new TableData { Id = "CompanyUsers", Name = "CompanyUsers", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
             new TableData { Id = "EmailsInfo", Name = "EmailsInfo", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
-            new TableData { Id = "Devices", Name = "Devices", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" }
-
+            new TableData { Id = "Devices", Name = "Devices", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
+            new TableData { Id = "FollowUps", Name = "FollowUps", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
+            new TableData { Id = "Cases", Name = "Cases", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" }
             );
 
         modelBuilder.Entity<TableDataPrimaryKey>().HasData(
@@ -57,8 +70,9 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
             new TableDataPrimaryKey { TableId = "WorkCenters", ColumnName = "Id" },
             new TableDataPrimaryKey { TableId = "CompanyUsers", ColumnName = "Id" },
             new TableDataPrimaryKey { TableId = "EmailsInfo", ColumnName = "Id" },
-            new TableDataPrimaryKey { TableId = "Devices", ColumnName = "Id" }
-
+            new TableDataPrimaryKey { TableId = "Devices", ColumnName = "Id" },
+            new TableDataPrimaryKey { TableId = "FollowUps", ColumnName = "Id" },
+            new TableDataPrimaryKey { TableId = "Cases", ColumnName = "Id" }
             );
 
         modelBuilder.Entity<TableDataAttributes>().HasData(
@@ -68,7 +82,9 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
             new TableDataAttributes { Id = -1004, TableId = "WorkCenters", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?WorkCentersScreen" },
             new TableDataAttributes { Id = -1005, TableId = "CompanyUsers", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?CompanyUsersScreen" },
             new TableDataAttributes { Id = -1006, TableId = "EmailsInfo", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?EmailsInfoScreen" },
-            new TableDataAttributes { Id = -1007, TableId = "Devices", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?DevicesScreen" }
+            new TableDataAttributes { Id = -1007, TableId = "Devices", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?DevicesScreen" },
+            new TableDataAttributes { Id = -1008, TableId = "FollowUps", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?FollowUpsScreen" },
+            new TableDataAttributes { Id = -1009, TableId = "Cases", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?CasesScreen" }
 
             );
 
@@ -79,7 +95,16 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
             new TableDataButtons { TableId = "WorkCenters", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?WorkCentersScreen" },
             new TableDataButtons { TableId = "CompanyUsers", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?CompanyUsersScreen" },
             new TableDataButtons { TableId = "EmailsInfo", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?EmailsInfoScreen" },
-            new TableDataButtons { TableId = "Devices", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?DevicesScreen" }
+            new TableDataButtons { TableId = "Devices", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?DevicesScreen" },
+            new TableDataButtons { TableId = "FollowUps", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?FollowUpsScreen" },
+            new TableDataButtons { TableId = "Cases", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?CasesScreen" }
+            );
+
+        modelBuilder.Entity<Template>().HasData(
+            new Template { Name = "FOLLOWUP_TECHNICIAN", Type = TemplateType.EMAIL, Subject="{SUBJECT}", Contents = "<$--ESCRIBE ARRIBA--$> {PREV_CONTENT}", ParametersInfo = "{PREV_CONTENT}, {SUBJECT}", ConnectorName = "NOTIFICATION_EMAIL", Deletable = false },
+            new Template { Name = "FOLLOWUP_CLIENT", Type = TemplateType.EMAIL, Subject = "{SUBJECT}", Contents = "{PREV_CONTENT}", ParametersInfo = "{PREV_CONTENT}, {SUBJECT}", ConnectorName = "NOTIFICATION_EMAIL", Deletable = false },
+            new Template { Name = "NEW_CASE_CLIENT", Type = TemplateType.EMAIL, Subject = "Nuevo caso {CASE_ID}", Contents = "Se ha creado un nuevo caso {CASE_ID}", ParametersInfo = "{CASE_ID}", ConnectorName = "NOTIFICATION_EMAIL", Deletable = false }
+
             );
 
         modelBuilder.Entity<GenericListRecord>().HasData(
@@ -87,6 +112,37 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
             new GenericListRecord { Id = "DepartmentsContabilidad", Type = GenericListRecordType.SYSTEM, Text = "Contabilidad", Category = "Departments" },
             new GenericListRecord { Id = "DepartmentsDireccion", Type = GenericListRecordType.SYSTEM, Text = "Direccion", Category = "Departments" },
             new GenericListRecord { Id = "DepartmentsRRHH", Type = GenericListRecordType.SYSTEM, Text = "RRHH", Category = "Departments" },
+
+            // CaseStatus
+            new GenericListRecord { Id = "CaseStatusNew", Type = GenericListRecordType.SYSTEM, Text = "Nuevo", Category = "CaseStatus" },
+            new GenericListRecord { Id = "CaseStatusInProgress", Type = GenericListRecordType.SYSTEM, Text = "En curso", Category = "CaseStatus" },
+            new GenericListRecord { Id = "CaseStatusPendingClient", Type = GenericListRecordType.SYSTEM, Text = "Pendiente cliente", Category = "CaseStatus" },
+            new GenericListRecord { Id = "CaseStatusPaused", Type = GenericListRecordType.SYSTEM, Text = "Pausada", Category = "CaseStatus" },
+            new GenericListRecord { Id = "CaseStatusClosed", Type = GenericListRecordType.SYSTEM, Text = "Cerrado", Category = "CaseStatus" },
+
+            // CaseCategory
+            new GenericListRecord { Id = "CaseCategoryConsulta", Type = GenericListRecordType.SYSTEM, Text = "Consulta", Category = "CaseCategory" },
+            new GenericListRecord { Id = "CaseCategoryRequest", Type = GenericListRecordType.SYSTEM, Text = "Petición", Category = "CaseCategory" },
+            new GenericListRecord { Id = "CaseCategorySecurity", Type = GenericListRecordType.SYSTEM, Text = "Seguridad", Category = "CaseCategory" },
+            new GenericListRecord { Id = "CaseCategoryIncidence", Type = GenericListRecordType.SYSTEM, Text = "Incidencia", Category = "CaseCategory" },
+
+            // CasePriority
+            new GenericListRecord { Id = "CasePriorityHigh", Type = GenericListRecordType.SYSTEM, Text = "High", Category = "CasePriority" },
+            new GenericListRecord { Id = "CasePriorityMid", Type = GenericListRecordType.SYSTEM, Text = "Mid", Category = "CasePriority" },
+            new GenericListRecord { Id = "CasePriorityLow", Type = GenericListRecordType.SYSTEM, Text = "Low", Category = "CasePriority" },
+
+            // CaseClassificationTags
+            new GenericListRecord { Id = "CaseClassificationTag0", Type = GenericListRecordType.SYSTEM, Text = "0", Category = "CaseClassificationTag" },
+            new GenericListRecord { Id = "CaseClassificationTag1", Type = GenericListRecordType.SYSTEM, Text = "1", Category = "CaseClassificationTag" },
+            new GenericListRecord { Id = "CaseClassificationTag2", Type = GenericListRecordType.SYSTEM, Text = "2", Category = "CaseClassificationTag" },
+
+            // CaseEntryChannels
+            new GenericListRecord { Id = "CaseEntryChannelCall", Type = GenericListRecordType.SYSTEM, Text = "Llamada", Category = "CaseEntryChannel" },
+            new GenericListRecord { Id = "CaseEntryChannelWhatsapp", Type = GenericListRecordType.SYSTEM, Text = "Whatsapp", Category = "CaseEntryChannel" },
+            new GenericListRecord { Id = "CaseEntryChannelWeb", Type = GenericListRecordType.SYSTEM, Text = "Web", Category = "CaseEntryChannel" },
+            new GenericListRecord { Id = "CaseEntryChannelChatBot", Type = GenericListRecordType.SYSTEM, Text = "Chatbot", Category = "CaseEntryChannel" },
+            new GenericListRecord { Id = "CaseEntryChannelClientArea", Type = GenericListRecordType.SYSTEM, Text = "Área cliente", Category = "CaseEntryChannel" },
+            new GenericListRecord { Id = "CaseEntryChannelEmail", Type = GenericListRecordType.SYSTEM, Text = "Correo electrónico", Category = "CaseEntryChannel" },
 
             // Device Types
             new GenericListRecord { Id = "DeviceTypeOrdenador", Type = GenericListRecordType.SYSTEM, Text = "Ordenador", Category = "DeviceType" },

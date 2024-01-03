@@ -4,6 +4,7 @@ using BackendGobiernoIT.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackendGobiernoIT.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240102201548_NMVe2")]
+    partial class NMVe2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2800,8 +2803,7 @@ namespace BackendGobiernoIT.Migrations
                             ConnectorName = "NOTIFICATION_EMAIL",
                             Contents = "<$--ESCRIBE ARRIBA--$> {PREV_CONTENT}",
                             Deletable = false,
-                            ParametersInfo = "{PREV_CONTENT}, {SUBJECT}",
-                            Subject = "{SUBJECT}",
+                            ParametersInfo = "{PREV_CONTENT}",
                             Type = 1
                         },
                         new
@@ -2810,18 +2812,7 @@ namespace BackendGobiernoIT.Migrations
                             ConnectorName = "NOTIFICATION_EMAIL",
                             Contents = "{PREV_CONTENT}",
                             Deletable = false,
-                            ParametersInfo = "{PREV_CONTENT}, {SUBJECT}",
-                            Subject = "{SUBJECT}",
-                            Type = 1
-                        },
-                        new
-                        {
-                            Name = "NEW_CASE_CLIENT",
-                            ConnectorName = "NOTIFICATION_EMAIL",
-                            Contents = "Se ha creado un nuevo caso {CASE_ID}",
-                            Deletable = false,
-                            ParametersInfo = "{PREV_CONTENT}, {CASE_ID}",
-                            Subject = "{SUBJECT}",
+                            ParametersInfo = "{PREV_CONTENT}",
                             Type = 1
                         });
                 });

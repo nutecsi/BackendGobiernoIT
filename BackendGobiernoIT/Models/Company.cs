@@ -20,6 +20,8 @@ public class Company
     // Relationship with the Phone table
     public virtual ICollection<Phone> Phones { get; set; }
 
+    public virtual ICollection<CompanyUser> CompanyUsers { get; set; }
+
     // Relationship with the WorkCenter table
     public virtual ICollection<WorkCenter> WorkCenters { get; set; }
 }

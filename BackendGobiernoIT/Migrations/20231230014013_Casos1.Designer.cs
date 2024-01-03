@@ -4,6 +4,7 @@ using BackendGobiernoIT.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackendGobiernoIT.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231230014013_Casos1")]
+    partial class Casos1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,10 +102,10 @@ namespace BackendGobiernoIT.Migrations
                         {
                             Name = "NOTIFICATION_EMAIL",
                             Deletable = false,
-                            SmtpPassword = "@2023$hD",
+                            SmtpPassword = "Fer2023$",
                             SmtpPort = 587,
                             SmtpServer = "smtp.office365.com",
-                            SmtpUsername = "helpdesk@nutec.es",
+                            SmtpUsername = "hola@nutec.cloud",
                             Type = 1
                         });
                 });
@@ -1262,48 +1265,6 @@ namespace BackendGobiernoIT.Migrations
                             Id = "CaseClassificationTag2",
                             Category = "CaseClassificationTag",
                             Text = "2",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "CaseEntryChannelCall",
-                            Category = "CaseEntryChannel",
-                            Text = "Llamada",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "CaseEntryChannelWhatsapp",
-                            Category = "CaseEntryChannel",
-                            Text = "Whatsapp",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "CaseEntryChannelWeb",
-                            Category = "CaseEntryChannel",
-                            Text = "Web",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "CaseEntryChannelChatBot",
-                            Category = "CaseEntryChannel",
-                            Text = "Chatbot",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "CaseEntryChannelClientArea",
-                            Category = "CaseEntryChannel",
-                            Text = "Área cliente",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "CaseEntryChannelEmail",
-                            Category = "CaseEntryChannel",
-                            Text = "Correo electrónico",
                             Type = 0
                         },
                         new
@@ -2793,36 +2754,6 @@ namespace BackendGobiernoIT.Migrations
                             Deletable = false,
                             ParametersInfo = "",
                             Type = 1
-                        },
-                        new
-                        {
-                            Name = "FOLLOWUP_TECHNICIAN",
-                            ConnectorName = "NOTIFICATION_EMAIL",
-                            Contents = "<$--ESCRIBE ARRIBA--$> {PREV_CONTENT}",
-                            Deletable = false,
-                            ParametersInfo = "{PREV_CONTENT}, {SUBJECT}",
-                            Subject = "{SUBJECT}",
-                            Type = 1
-                        },
-                        new
-                        {
-                            Name = "FOLLOWUP_CLIENT",
-                            ConnectorName = "NOTIFICATION_EMAIL",
-                            Contents = "{PREV_CONTENT}",
-                            Deletable = false,
-                            ParametersInfo = "{PREV_CONTENT}, {SUBJECT}",
-                            Subject = "{SUBJECT}",
-                            Type = 1
-                        },
-                        new
-                        {
-                            Name = "NEW_CASE_CLIENT",
-                            ConnectorName = "NOTIFICATION_EMAIL",
-                            Contents = "Se ha creado un nuevo caso {CASE_ID}",
-                            Deletable = false,
-                            ParametersInfo = "{PREV_CONTENT}, {CASE_ID}",
-                            Subject = "{SUBJECT}",
-                            Type = 1
                         });
                 });
 
@@ -2914,10 +2845,12 @@ namespace BackendGobiernoIT.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("CategoryId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ClassificationId")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ClosingUserId")
                         .HasColumnType("nvarchar(450)");
@@ -2925,13 +2858,11 @@ namespace BackendGobiernoIT.Migrations
                     b.Property<DateTime?>("ClosureDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CompanyId")
+                    b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETUTCDATE()");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreatorUserId")
                         .IsRequired()
@@ -2947,7 +2878,7 @@ namespace BackendGobiernoIT.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("GroupId")
+                    b.Property<int>("GroupId")
                         .HasColumnType("int");
 
                     b.Property<int?>("HardwareInventoryId")
@@ -2964,7 +2895,7 @@ namespace BackendGobiernoIT.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("RequesterClientId")
+                    b.Property<int>("RequesterClientId")
                         .HasColumnType("int");
 
                     b.Property<string>("ResponsibleUserId")
@@ -2977,6 +2908,8 @@ namespace BackendGobiernoIT.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("ClassificationId");
 
                     b.HasIndex("ClosingUserId");
 
@@ -3285,6 +3218,7 @@ namespace BackendGobiernoIT.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("ClientUserId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateTime")
@@ -3849,7 +3783,14 @@ namespace BackendGobiernoIT.Migrations
                     b.HasOne("BackendCore.Lib.Models.GenericListRecord", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("BackendCore.Lib.Models.GenericListRecord", "Classification")
+                        .WithMany()
+                        .HasForeignKey("ClassificationId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("BackendCore.Lib.Models.CoreUser", "ClosingUser")
                         .WithMany()
@@ -3859,7 +3800,8 @@ namespace BackendGobiernoIT.Migrations
                     b.HasOne("BackendGobiernoIT.Models.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("BackendCore.Lib.Models.CoreUser", "CreatorUser")
                         .WithMany()
@@ -3881,7 +3823,8 @@ namespace BackendGobiernoIT.Migrations
                     b.HasOne("BackendCore.Lib.Models.Group", "Group")
                         .WithMany()
                         .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("BackendGobiernoIT.Models.Device", "HardwareInventory")
                         .WithMany()
@@ -3902,7 +3845,8 @@ namespace BackendGobiernoIT.Migrations
                     b.HasOne("BackendGobiernoIT.Models.CompanyUser", "RequesterClient")
                         .WithMany()
                         .HasForeignKey("RequesterClientId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("BackendCore.Lib.Models.CoreUser", "ResponsibleUser")
                         .WithMany()
@@ -3916,6 +3860,8 @@ namespace BackendGobiernoIT.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+
+                    b.Navigation("Classification");
 
                     b.Navigation("ClosingUser");
 
@@ -3945,7 +3891,7 @@ namespace BackendGobiernoIT.Migrations
             modelBuilder.Entity("BackendGobiernoIT.Models.CompanyUser", b =>
                 {
                     b.HasOne("BackendGobiernoIT.Models.Company", "Company")
-                        .WithMany("CompanyUsers")
+                        .WithMany()
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -4115,7 +4061,8 @@ namespace BackendGobiernoIT.Migrations
                     b.HasOne("BackendGobiernoIT.Models.CompanyUser", "ClientUser")
                         .WithMany()
                         .HasForeignKey("ClientUserId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("BackendCore.Lib.Models.CoreUser", "InternalUser")
                         .WithMany()
@@ -4222,8 +4169,6 @@ namespace BackendGobiernoIT.Migrations
 
             modelBuilder.Entity("BackendGobiernoIT.Models.Company", b =>
                 {
-                    b.Navigation("CompanyUsers");
-
                     b.Navigation("EmailDomains");
 
                     b.Navigation("Phones");

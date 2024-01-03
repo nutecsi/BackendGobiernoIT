@@ -4,6 +4,7 @@ using BackendGobiernoIT.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackendGobiernoIT.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240102180941_NMVe1")]
+    partial class NMVe1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,10 +102,10 @@ namespace BackendGobiernoIT.Migrations
                         {
                             Name = "NOTIFICATION_EMAIL",
                             Deletable = false,
-                            SmtpPassword = "@2023$hD",
+                            SmtpPassword = "Fer2023$",
                             SmtpPort = 587,
                             SmtpServer = "smtp.office365.com",
-                            SmtpUsername = "helpdesk@nutec.es",
+                            SmtpUsername = "hola@nutec.cloud",
                             Type = 1
                         });
                 });
@@ -2792,36 +2795,6 @@ namespace BackendGobiernoIT.Migrations
                             Contents = "",
                             Deletable = false,
                             ParametersInfo = "",
-                            Type = 1
-                        },
-                        new
-                        {
-                            Name = "FOLLOWUP_TECHNICIAN",
-                            ConnectorName = "NOTIFICATION_EMAIL",
-                            Contents = "<$--ESCRIBE ARRIBA--$> {PREV_CONTENT}",
-                            Deletable = false,
-                            ParametersInfo = "{PREV_CONTENT}, {SUBJECT}",
-                            Subject = "{SUBJECT}",
-                            Type = 1
-                        },
-                        new
-                        {
-                            Name = "FOLLOWUP_CLIENT",
-                            ConnectorName = "NOTIFICATION_EMAIL",
-                            Contents = "{PREV_CONTENT}",
-                            Deletable = false,
-                            ParametersInfo = "{PREV_CONTENT}, {SUBJECT}",
-                            Subject = "{SUBJECT}",
-                            Type = 1
-                        },
-                        new
-                        {
-                            Name = "NEW_CASE_CLIENT",
-                            ConnectorName = "NOTIFICATION_EMAIL",
-                            Contents = "Se ha creado un nuevo caso {CASE_ID}",
-                            Deletable = false,
-                            ParametersInfo = "{PREV_CONTENT}, {CASE_ID}",
-                            Subject = "{SUBJECT}",
                             Type = 1
                         });
                 });

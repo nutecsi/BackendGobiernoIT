@@ -4,6 +4,7 @@ using BackendGobiernoIT.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackendGobiernoIT.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231230013314_Casos0")]
+    partial class Casos0
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,10 +102,10 @@ namespace BackendGobiernoIT.Migrations
                         {
                             Name = "NOTIFICATION_EMAIL",
                             Deletable = false,
-                            SmtpPassword = "@2023$hD",
+                            SmtpPassword = "Fer2023$",
                             SmtpPort = 587,
                             SmtpServer = "smtp.office365.com",
-                            SmtpUsername = "helpdesk@nutec.es",
+                            SmtpUsername = "hola@nutec.cloud",
                             Type = 1
                         });
                 });
@@ -1266,48 +1269,6 @@ namespace BackendGobiernoIT.Migrations
                         },
                         new
                         {
-                            Id = "CaseEntryChannelCall",
-                            Category = "CaseEntryChannel",
-                            Text = "Llamada",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "CaseEntryChannelWhatsapp",
-                            Category = "CaseEntryChannel",
-                            Text = "Whatsapp",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "CaseEntryChannelWeb",
-                            Category = "CaseEntryChannel",
-                            Text = "Web",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "CaseEntryChannelChatBot",
-                            Category = "CaseEntryChannel",
-                            Text = "Chatbot",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "CaseEntryChannelClientArea",
-                            Category = "CaseEntryChannel",
-                            Text = "Área cliente",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "CaseEntryChannelEmail",
-                            Category = "CaseEntryChannel",
-                            Text = "Correo electrónico",
-                            Type = 0
-                        },
-                        new
-                        {
                             Id = "DeviceTypeOrdenador",
                             Category = "DeviceType",
                             Text = "Ordenador",
@@ -2152,26 +2113,6 @@ namespace BackendGobiernoIT.Migrations
                             Name = "Devices",
                             Read = "Read",
                             Update = "Update"
-                        },
-                        new
-                        {
-                            Id = "FollowUps",
-                            Create = "Create",
-                            Delete = "Delete",
-                            Export = "Export",
-                            Name = "FollowUps",
-                            Read = "Read",
-                            Update = "Update"
-                        },
-                        new
-                        {
-                            Id = "Cases",
-                            Create = "Create",
-                            Delete = "Delete",
-                            Export = "Export",
-                            Name = "Cases",
-                            Read = "Read",
-                            Update = "Update"
                         });
                 });
 
@@ -2324,20 +2265,6 @@ namespace BackendGobiernoIT.Migrations
                             AttributeType = "onClick:splitScreenOverlay?DevicesScreen",
                             ColumnsAffected = "*",
                             TableId = "Devices"
-                        },
-                        new
-                        {
-                            Id = -1008,
-                            AttributeType = "onClick:splitScreenOverlay?FollowUpsScreen",
-                            ColumnsAffected = "*",
-                            TableId = "FollowUps"
-                        },
-                        new
-                        {
-                            Id = -1009,
-                            AttributeType = "onClick:splitScreenOverlay?CasesScreen",
-                            ColumnsAffected = "*",
-                            TableId = "Cases"
                         });
                 });
 
@@ -2460,20 +2387,6 @@ namespace BackendGobiernoIT.Migrations
                             ButtonName = "new",
                             Image = "punta.png",
                             OnClick = "splitScreenOverlay?DevicesScreen"
-                        },
-                        new
-                        {
-                            TableId = "FollowUps",
-                            ButtonName = "new",
-                            Image = "punta.png",
-                            OnClick = "splitScreenOverlay?FollowUpsScreen"
-                        },
-                        new
-                        {
-                            TableId = "Cases",
-                            ButtonName = "new",
-                            Image = "punta.png",
-                            OnClick = "splitScreenOverlay?CasesScreen"
                         });
                 });
 
@@ -2658,16 +2571,6 @@ namespace BackendGobiernoIT.Migrations
                         {
                             TableId = "Devices",
                             ColumnName = "Id"
-                        },
-                        new
-                        {
-                            TableId = "FollowUps",
-                            ColumnName = "Id"
-                        },
-                        new
-                        {
-                            TableId = "Cases",
-                            ColumnName = "Id"
                         });
                 });
 
@@ -2793,36 +2696,6 @@ namespace BackendGobiernoIT.Migrations
                             Deletable = false,
                             ParametersInfo = "",
                             Type = 1
-                        },
-                        new
-                        {
-                            Name = "FOLLOWUP_TECHNICIAN",
-                            ConnectorName = "NOTIFICATION_EMAIL",
-                            Contents = "<$--ESCRIBE ARRIBA--$> {PREV_CONTENT}",
-                            Deletable = false,
-                            ParametersInfo = "{PREV_CONTENT}, {SUBJECT}",
-                            Subject = "{SUBJECT}",
-                            Type = 1
-                        },
-                        new
-                        {
-                            Name = "FOLLOWUP_CLIENT",
-                            ConnectorName = "NOTIFICATION_EMAIL",
-                            Contents = "{PREV_CONTENT}",
-                            Deletable = false,
-                            ParametersInfo = "{PREV_CONTENT}, {SUBJECT}",
-                            Subject = "{SUBJECT}",
-                            Type = 1
-                        },
-                        new
-                        {
-                            Name = "NEW_CASE_CLIENT",
-                            ConnectorName = "NOTIFICATION_EMAIL",
-                            Contents = "Se ha creado un nuevo caso {CASE_ID}",
-                            Deletable = false,
-                            ParametersInfo = "{PREV_CONTENT}, {CASE_ID}",
-                            Subject = "{SUBJECT}",
-                            Type = 1
                         });
                 });
 
@@ -2899,110 +2772,6 @@ namespace BackendGobiernoIT.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("_UserPasswordHistory");
-                });
-
-            modelBuilder.Entity("BackendGobiernoIT.Models.Case", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CaseDescription")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("CategoryId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ClassificationId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClosingUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime?>("ClosureDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreationDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETUTCDATE()");
-
-                    b.Property<string>("CreatorUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("DependantTaskId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EntryChannelId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("GroupId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("HardwareInventoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Notes")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PriorityId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("RequesterClientId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ResponsibleUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("StatusId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("ClosingUserId");
-
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("CreatorUserId");
-
-                    b.HasIndex("DependantTaskId");
-
-                    b.HasIndex("EntryChannelId");
-
-                    b.HasIndex("GroupId");
-
-                    b.HasIndex("HardwareInventoryId");
-
-                    b.HasIndex("ParentId");
-
-                    b.HasIndex("PriorityId");
-
-                    b.HasIndex("RequesterClientId");
-
-                    b.HasIndex("ResponsibleUserId");
-
-                    b.HasIndex("StatusId");
-
-                    b.ToTable("Cases");
                 });
 
             modelBuilder.Entity("BackendGobiernoIT.Models.Company", b =>
@@ -3271,49 +3040,6 @@ namespace BackendGobiernoIT.Migrations
                     b.HasIndex("CompanyUserId");
 
                     b.ToTable("EmailsInfo");
-                });
-
-            modelBuilder.Entity("BackendGobiernoIT.Models.FollowUp", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CaseId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ClientUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.Property<string>("InternalUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("IsPrivate")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("NotifyByEmail")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CaseId");
-
-                    b.HasIndex("ClientUserId");
-
-                    b.HasIndex("InternalUserId");
-
-                    b.ToTable("FollowUps");
                 });
 
             modelBuilder.Entity("BackendGobiernoIT.Models.Phone", b =>
@@ -3844,108 +3570,10 @@ namespace BackendGobiernoIT.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("BackendGobiernoIT.Models.Case", b =>
-                {
-                    b.HasOne("BackendCore.Lib.Models.GenericListRecord", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("BackendCore.Lib.Models.CoreUser", "ClosingUser")
-                        .WithMany()
-                        .HasForeignKey("ClosingUserId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("BackendGobiernoIT.Models.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("BackendCore.Lib.Models.CoreUser", "CreatorUser")
-                        .WithMany()
-                        .HasForeignKey("CreatorUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("BackendGobiernoIT.Models.Case", "DependantTask")
-                        .WithMany()
-                        .HasForeignKey("DependantTaskId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("BackendCore.Lib.Models.GenericListRecord", "EntryChannel")
-                        .WithMany()
-                        .HasForeignKey("EntryChannelId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("BackendCore.Lib.Models.Group", "Group")
-                        .WithMany()
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("BackendGobiernoIT.Models.Device", "HardwareInventory")
-                        .WithMany()
-                        .HasForeignKey("HardwareInventoryId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("BackendGobiernoIT.Models.Case", "Parent")
-                        .WithMany("Subtasks")
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("BackendCore.Lib.Models.GenericListRecord", "Priority")
-                        .WithMany()
-                        .HasForeignKey("PriorityId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("BackendGobiernoIT.Models.CompanyUser", "RequesterClient")
-                        .WithMany()
-                        .HasForeignKey("RequesterClientId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("BackendCore.Lib.Models.CoreUser", "ResponsibleUser")
-                        .WithMany()
-                        .HasForeignKey("ResponsibleUserId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("BackendCore.Lib.Models.GenericListRecord", "Status")
-                        .WithMany()
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("ClosingUser");
-
-                    b.Navigation("Company");
-
-                    b.Navigation("CreatorUser");
-
-                    b.Navigation("DependantTask");
-
-                    b.Navigation("EntryChannel");
-
-                    b.Navigation("Group");
-
-                    b.Navigation("HardwareInventory");
-
-                    b.Navigation("Parent");
-
-                    b.Navigation("Priority");
-
-                    b.Navigation("RequesterClient");
-
-                    b.Navigation("ResponsibleUser");
-
-                    b.Navigation("Status");
-                });
-
             modelBuilder.Entity("BackendGobiernoIT.Models.CompanyUser", b =>
                 {
                     b.HasOne("BackendGobiernoIT.Models.Company", "Company")
-                        .WithMany("CompanyUsers")
+                        .WithMany()
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -4104,32 +3732,6 @@ namespace BackendGobiernoIT.Migrations
                     b.Navigation("CompanyUser");
                 });
 
-            modelBuilder.Entity("BackendGobiernoIT.Models.FollowUp", b =>
-                {
-                    b.HasOne("BackendGobiernoIT.Models.Case", "Case")
-                        .WithMany("FollowUps")
-                        .HasForeignKey("CaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BackendGobiernoIT.Models.CompanyUser", "ClientUser")
-                        .WithMany()
-                        .HasForeignKey("ClientUserId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("BackendCore.Lib.Models.CoreUser", "InternalUser")
-                        .WithMany()
-                        .HasForeignKey("InternalUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Case");
-
-                    b.Navigation("ClientUser");
-
-                    b.Navigation("InternalUser");
-                });
-
             modelBuilder.Entity("BackendGobiernoIT.Models.Phone", b =>
                 {
                     b.HasOne("BackendGobiernoIT.Models.Company", "Company")
@@ -4213,17 +3815,8 @@ namespace BackendGobiernoIT.Migrations
                     b.Navigation("UserApplicationDomains");
                 });
 
-            modelBuilder.Entity("BackendGobiernoIT.Models.Case", b =>
-                {
-                    b.Navigation("FollowUps");
-
-                    b.Navigation("Subtasks");
-                });
-
             modelBuilder.Entity("BackendGobiernoIT.Models.Company", b =>
                 {
-                    b.Navigation("CompanyUsers");
-
                     b.Navigation("EmailDomains");
 
                     b.Navigation("Phones");
