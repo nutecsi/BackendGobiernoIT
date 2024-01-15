@@ -34,6 +34,9 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
     public DbSet<Hosting> Hostings { get; set; }
     public DbSet<HostingItem> HostingsInventory { get; set; }
 
+    public DbSet<Backup> Backups { get; set; }
+    public DbSet<BackupDeviceLink> BackupDeviceLinks { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -75,6 +78,9 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
         modelBuilder.Entity<DeviceLink>()
            .HasKey(cu => new { cu.SourceDeviceId, cu.DestinationDeviceId });
 
+        modelBuilder.Entity<BackupDeviceLink>()
+            .HasKey(cu => new { cu.BackupId, cu.DeviceId });
+
         modelBuilder.Entity<DeviceLink>()
            .HasOne(cu => cu.SourceDevice)
            .WithMany()
@@ -105,8 +111,9 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
             new TableData { Id = "Domains", Name = "Domains", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
             new TableData { Id = "SSLCertificatesInventory", Name = "SSLCertificatesInventory", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
             new TableData { Id = "Hostings", Name = "Hostings", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
-            new TableData { Id = "HostingsInventory", Name = "HostingsInventory", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" }
-
+            new TableData { Id = "HostingsInventory", Name = "HostingsInventory", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
+            new TableData { Id = "Backups", Name = "Backups", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
+            new TableData { Id = "BackupDeviceLinks", Name = "BackupDeviceLinks", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" }
             );
 
         modelBuilder.Entity<TableDataPrimaryKey>().HasData(
@@ -127,7 +134,10 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
             new TableDataPrimaryKey { TableId = "Domains", ColumnName = "Id" },
             new TableDataPrimaryKey { TableId = "SSLCertificatesInventory", ColumnName = "Id" },
             new TableDataPrimaryKey { TableId = "Hostings", ColumnName = "Id" },
-            new TableDataPrimaryKey { TableId = "HostingsInventory", ColumnName = "Id" }
+            new TableDataPrimaryKey { TableId = "HostingsInventory", ColumnName = "Id" },
+            new TableDataPrimaryKey { TableId = "Backups", ColumnName = "Id" },
+            new TableDataPrimaryKey { TableId = "BackupDeviceLinks", ColumnName = "BackupId" },
+            new TableDataPrimaryKey { TableId = "BackupDeviceLinks", ColumnName = "DeviceId" }
             );
 
         modelBuilder.Entity<TableDataAttributes>().HasData(
@@ -147,7 +157,10 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
             new TableDataAttributes { Id = -1014, TableId = "Domains", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?DomainsScreen" },
             new TableDataAttributes { Id = -1015, TableId = "SSLCertificatesInventory", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?SSLCertificatesInventoryScreen" },
             new TableDataAttributes { Id = -1016, TableId = "Hostings", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?HostingsScreen" },
-            new TableDataAttributes { Id = -1017, TableId = "HostingsInventory", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?HostingsInventoryScreen" }
+            new TableDataAttributes { Id = -1017, TableId = "HostingsInventory", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?HostingsInventoryScreen" },
+            new TableDataAttributes { Id = -1018, TableId = "Backups", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?BackupsScreen" },
+            new TableDataAttributes { Id = -1019, TableId = "BackupDeviceLinks", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?BackupDeviceLinksScreen" }
+
 
             );
 
@@ -168,7 +181,9 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
             new TableDataButtons { TableId = "Domains", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?DomainsScreen" },
             new TableDataButtons { TableId = "SSLCertificatesInventory", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?SSLCertificatesInventoryScreen" },
             new TableDataButtons { TableId = "Hostings", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?HostingsScreen" },
-            new TableDataButtons { TableId = "HostingsInventory", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?HostingsInventoryScreen" }
+            new TableDataButtons { TableId = "HostingsInventory", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?HostingsInventoryScreen" },
+            new TableDataButtons { TableId = "Backups", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?BackupsScreen" },
+            new TableDataButtons { TableId = "BackupDeviceLinks", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?BackupDeviceLinksScreen" }
             );
 
         modelBuilder.Entity<Template>().HasData(
