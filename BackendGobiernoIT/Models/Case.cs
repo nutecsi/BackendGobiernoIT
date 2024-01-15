@@ -28,7 +28,6 @@ public class Case
     [MaxLength(500)]
     public string? CaseDescription { get; set; } // Descripción breve
 
-    [MaxLength(2000)]
     public string? Notes { get; set; } // Descripción larga
 
     public int? ParentId { get; set; } // Para subtareas, el ID del caso padre

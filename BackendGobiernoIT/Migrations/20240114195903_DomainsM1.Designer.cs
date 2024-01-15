@@ -4,6 +4,7 @@ using BackendGobiernoIT.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackendGobiernoIT.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240114195903_DomainsM1")]
+    partial class DomainsM1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1644,41 +1647,6 @@ namespace BackendGobiernoIT.Migrations
                         },
                         new
                         {
-                            Id = "SSLCertTypeWildCard",
-                            Category = "SSLCertType",
-                            Text = "WildCard",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "SSLCertTypeDV",
-                            Category = "SSLCertType",
-                            Text = "DV (Verifica URL)",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "SSLCertTypeOV",
-                            Category = "SSLCertType",
-                            Text = "OV (Verifica organización)",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "HostingSystemPlesk",
-                            Category = "HostingSystem",
-                            Text = "Plesk",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "HostingSystemOther",
-                            Category = "HostingSystem",
-                            Text = "Otro",
-                            Type = 0
-                        },
-                        new
-                        {
                             Id = "IPMask8",
                             Category = "IPMask",
                             Text = "8",
@@ -2369,36 +2337,6 @@ namespace BackendGobiernoIT.Migrations
                             Name = "Domains",
                             Read = "Read",
                             Update = "Update"
-                        },
-                        new
-                        {
-                            Id = "SSLCertificatesInventory",
-                            Create = "Create",
-                            Delete = "Delete",
-                            Export = "Export",
-                            Name = "SSLCertificatesInventory",
-                            Read = "Read",
-                            Update = "Update"
-                        },
-                        new
-                        {
-                            Id = "Hostings",
-                            Create = "Create",
-                            Delete = "Delete",
-                            Export = "Export",
-                            Name = "Hostings",
-                            Read = "Read",
-                            Update = "Update"
-                        },
-                        new
-                        {
-                            Id = "HostingsInventory",
-                            Create = "Create",
-                            Delete = "Delete",
-                            Export = "Export",
-                            Name = "HostingsInventory",
-                            Read = "Read",
-                            Update = "Update"
                         });
                 });
 
@@ -2600,27 +2538,6 @@ namespace BackendGobiernoIT.Migrations
                             AttributeType = "onClick:splitScreenOverlay?DomainsScreen",
                             ColumnsAffected = "*",
                             TableId = "Domains"
-                        },
-                        new
-                        {
-                            Id = -1015,
-                            AttributeType = "onClick:splitScreenOverlay?SSLCertificatesInventoryScreen",
-                            ColumnsAffected = "*",
-                            TableId = "SSLCertificatesInventory"
-                        },
-                        new
-                        {
-                            Id = -1016,
-                            AttributeType = "onClick:splitScreenOverlay?HostingsScreen",
-                            ColumnsAffected = "*",
-                            TableId = "Hostings"
-                        },
-                        new
-                        {
-                            Id = -1017,
-                            AttributeType = "onClick:splitScreenOverlay?HostingsInventoryScreen",
-                            ColumnsAffected = "*",
-                            TableId = "HostingsInventory"
                         });
                 });
 
@@ -2792,27 +2709,6 @@ namespace BackendGobiernoIT.Migrations
                             ButtonName = "new",
                             Image = "punta.png",
                             OnClick = "splitScreenOverlay?DomainsScreen"
-                        },
-                        new
-                        {
-                            TableId = "SSLCertificatesInventory",
-                            ButtonName = "new",
-                            Image = "punta.png",
-                            OnClick = "splitScreenOverlay?SSLCertificatesInventoryScreen"
-                        },
-                        new
-                        {
-                            TableId = "Hostings",
-                            ButtonName = "new",
-                            Image = "punta.png",
-                            OnClick = "splitScreenOverlay?HostingsScreen"
-                        },
-                        new
-                        {
-                            TableId = "HostingsInventory",
-                            ButtonName = "new",
-                            Image = "punta.png",
-                            OnClick = "splitScreenOverlay?HostingsInventoryScreen"
                         });
                 });
 
@@ -3036,21 +2932,6 @@ namespace BackendGobiernoIT.Migrations
                         new
                         {
                             TableId = "Domains",
-                            ColumnName = "Id"
-                        },
-                        new
-                        {
-                            TableId = "SSLCertificatesInventory",
-                            ColumnName = "Id"
-                        },
-                        new
-                        {
-                            TableId = "Hostings",
-                            ColumnName = "Id"
-                        },
-                        new
-                        {
-                            TableId = "HostingsInventory",
                             ColumnName = "Id"
                         });
                 });
@@ -3783,97 +3664,6 @@ namespace BackendGobiernoIT.Migrations
                     b.ToTable("FollowUps");
                 });
 
-            modelBuilder.Entity("BackendGobiernoIT.Models.Hosting", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HostingSystemId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ManagementURL")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProviderId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PublicIP")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("RenovationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ServerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HostingSystemId");
-
-                    b.HasIndex("ProviderId");
-
-                    b.ToTable("Hostings");
-                });
-
-            modelBuilder.Entity("BackendGobiernoIT.Models.HostingItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("DnsServicesActive")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("DomainId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HostingId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IncludesSSL")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("MailServicesActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Redirect301")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("SSLCertId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("DomainId");
-
-                    b.HasIndex("HostingId");
-
-                    b.HasIndex("SSLCertId");
-
-                    b.ToTable("HostingsInventory");
-                });
-
             modelBuilder.Entity("BackendGobiernoIT.Models.Phone", b =>
                 {
                     b.Property<int>("Id")
@@ -3898,35 +3688,6 @@ namespace BackendGobiernoIT.Migrations
                     b.HasIndex("CompanyId");
 
                     b.ToTable("Phones");
-                });
-
-            modelBuilder.Entity("BackendGobiernoIT.Models.SSLCertificate", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CertTypeId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("RenovationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("URL")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CertTypeId");
-
-                    b.ToTable("SSLCertificatesInventory");
                 });
 
             modelBuilder.Entity("BackendGobiernoIT.Models.Software", b =>
@@ -4848,59 +4609,6 @@ namespace BackendGobiernoIT.Migrations
                     b.Navigation("InternalUser");
                 });
 
-            modelBuilder.Entity("BackendGobiernoIT.Models.Hosting", b =>
-                {
-                    b.HasOne("BackendCore.Lib.Models.GenericListRecord", "HostingSystem")
-                        .WithMany()
-                        .HasForeignKey("HostingSystemId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("BackendCore.Lib.Models.GenericListRecord", "Provider")
-                        .WithMany()
-                        .HasForeignKey("ProviderId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("HostingSystem");
-
-                    b.Navigation("Provider");
-                });
-
-            modelBuilder.Entity("BackendGobiernoIT.Models.HostingItem", b =>
-                {
-                    b.HasOne("BackendGobiernoIT.Models.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("BackendGobiernoIT.Models.Domain", "Domain")
-                        .WithMany()
-                        .HasForeignKey("DomainId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("BackendGobiernoIT.Models.Hosting", "Hosting")
-                        .WithMany()
-                        .HasForeignKey("HostingId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("BackendGobiernoIT.Models.SSLCertificate", "SSLCert")
-                        .WithMany()
-                        .HasForeignKey("SSLCertId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Company");
-
-                    b.Navigation("Domain");
-
-                    b.Navigation("Hosting");
-
-                    b.Navigation("SSLCert");
-                });
-
             modelBuilder.Entity("BackendGobiernoIT.Models.Phone", b =>
                 {
                     b.HasOne("BackendGobiernoIT.Models.Company", "Company")
@@ -4910,17 +4618,6 @@ namespace BackendGobiernoIT.Migrations
                         .IsRequired();
 
                     b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("BackendGobiernoIT.Models.SSLCertificate", b =>
-                {
-                    b.HasOne("BackendCore.Lib.Models.GenericListRecord", "CertType")
-                        .WithMany()
-                        .HasForeignKey("CertTypeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("CertType");
                 });
 
             modelBuilder.Entity("BackendGobiernoIT.Models.Software", b =>

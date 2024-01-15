@@ -19,10 +19,20 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
     public DbSet<Phone> Phones { get; set; }
     public DbSet<WorkCenter> WorkCenters { get; set; }
     public DbSet<CompanyUser> CompanyUsers { get; set; }
+    public DbSet<CompanyManager> CompanyManagers { get; set; }
     public DbSet<EmailInfo> EmailsInfo { get; set; }
     public DbSet<Device> Devices { get; set; }
+    public DbSet<DeviceLink> DeviceLinks { get; set; }
     public DbSet<Case> Cases { get; set; }
     public DbSet<FollowUp> FollowUps { get; set; }
+    public DbSet<Software> Softwares { get; set; }
+    public DbSet<SoftwareItem> SoftwareInventory { get; set; }
+
+    public DbSet<Domain> Domains { get; set; }
+
+    public DbSet<SSLCertificate> SSLCertificatesInventory { get; set; }
+    public DbSet<Hosting> Hostings { get; set; }
+    public DbSet<HostingItem> HostingsInventory { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -50,6 +60,33 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
             .Property(b => b.CreationDate)
             .HasDefaultValueSql("GETUTCDATE()");
 
+        modelBuilder.Entity<CompanyManager>()
+           .HasOne(cu => cu.CompanyUser)
+           .WithMany()
+           .HasForeignKey(cu => cu.CompanyUserId)
+           .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<CompanyManager>()
+           .HasOne(cu => cu.Company)
+           .WithMany()
+           .HasForeignKey(cu => cu.CompanyId)
+           .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<DeviceLink>()
+           .HasKey(cu => new { cu.SourceDeviceId, cu.DestinationDeviceId });
+
+        modelBuilder.Entity<DeviceLink>()
+           .HasOne(cu => cu.SourceDevice)
+           .WithMany()
+           .HasForeignKey(cu => cu.SourceDeviceId)
+           .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<DeviceLink>()
+           .HasOne(cu => cu.DestinationDevice)
+           .WithMany()
+           .HasForeignKey(cu => cu.DestinationDeviceId)
+           .OnDelete(DeleteBehavior.NoAction);
+
 
         modelBuilder.Entity<TableData>().HasData(
             new TableData { Id = "Companies", Name = "Companies", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
@@ -60,7 +97,16 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
             new TableData { Id = "EmailsInfo", Name = "EmailsInfo", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
             new TableData { Id = "Devices", Name = "Devices", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
             new TableData { Id = "FollowUps", Name = "FollowUps", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
-            new TableData { Id = "Cases", Name = "Cases", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" }
+            new TableData { Id = "Cases", Name = "Cases", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
+            new TableData { Id = "CompanyManagers", Name = "CompanyManagers", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
+            new TableData { Id = "DeviceLinks", Name = "DeviceLinks", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
+            new TableData { Id = "Softwares", Name = "Softwares", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
+            new TableData { Id = "SoftwareInventory", Name = "SoftwareInventory", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
+            new TableData { Id = "Domains", Name = "Domains", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
+            new TableData { Id = "SSLCertificatesInventory", Name = "SSLCertificatesInventory", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
+            new TableData { Id = "Hostings", Name = "Hostings", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" },
+            new TableData { Id = "HostingsInventory", Name = "HostingsInventory", Create = "Create", Read = "Read", Update = "Update", Delete = "Delete", Export = "Export" }
+
             );
 
         modelBuilder.Entity<TableDataPrimaryKey>().HasData(
@@ -72,7 +118,16 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
             new TableDataPrimaryKey { TableId = "EmailsInfo", ColumnName = "Id" },
             new TableDataPrimaryKey { TableId = "Devices", ColumnName = "Id" },
             new TableDataPrimaryKey { TableId = "FollowUps", ColumnName = "Id" },
-            new TableDataPrimaryKey { TableId = "Cases", ColumnName = "Id" }
+            new TableDataPrimaryKey { TableId = "Cases", ColumnName = "Id" },
+            new TableDataPrimaryKey { TableId = "CompanyManagers", ColumnName = "Id" },
+            new TableDataPrimaryKey { TableId = "DeviceLinks", ColumnName = "SourceDeviceId" },
+            new TableDataPrimaryKey { TableId = "DeviceLinks", ColumnName = "DestinationDeviceId" },
+            new TableDataPrimaryKey { TableId = "Softwares", ColumnName = "Id" },
+            new TableDataPrimaryKey { TableId = "SoftwareInventory", ColumnName = "Id" },
+            new TableDataPrimaryKey { TableId = "Domains", ColumnName = "Id" },
+            new TableDataPrimaryKey { TableId = "SSLCertificatesInventory", ColumnName = "Id" },
+            new TableDataPrimaryKey { TableId = "Hostings", ColumnName = "Id" },
+            new TableDataPrimaryKey { TableId = "HostingsInventory", ColumnName = "Id" }
             );
 
         modelBuilder.Entity<TableDataAttributes>().HasData(
@@ -84,7 +139,15 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
             new TableDataAttributes { Id = -1006, TableId = "EmailsInfo", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?EmailsInfoScreen" },
             new TableDataAttributes { Id = -1007, TableId = "Devices", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?DevicesScreen" },
             new TableDataAttributes { Id = -1008, TableId = "FollowUps", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?FollowUpsScreen" },
-            new TableDataAttributes { Id = -1009, TableId = "Cases", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?CasesScreen" }
+            new TableDataAttributes { Id = -1009, TableId = "Cases", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?CasesScreen" },
+            new TableDataAttributes { Id = -1010, TableId = "CompanyManagers", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?CompanyManagersScreen" },
+            new TableDataAttributes { Id = -1011, TableId = "DeviceLinks", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?DeviceLinksScreen" },
+            new TableDataAttributes { Id = -1012, TableId = "Softwares", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?SoftwaresScreen" },
+            new TableDataAttributes { Id = -1013, TableId = "SoftwareInventory", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?SoftwareInventoryScreen" },
+            new TableDataAttributes { Id = -1014, TableId = "Domains", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?DomainsScreen" },
+            new TableDataAttributes { Id = -1015, TableId = "SSLCertificatesInventory", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?SSLCertificatesInventoryScreen" },
+            new TableDataAttributes { Id = -1016, TableId = "Hostings", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?HostingsScreen" },
+            new TableDataAttributes { Id = -1017, TableId = "HostingsInventory", Condition = null, ColumnsAffected = "*", AttributeType = "onClick:splitScreenOverlay?HostingsInventoryScreen" }
 
             );
 
@@ -97,14 +160,21 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
             new TableDataButtons { TableId = "EmailsInfo", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?EmailsInfoScreen" },
             new TableDataButtons { TableId = "Devices", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?DevicesScreen" },
             new TableDataButtons { TableId = "FollowUps", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?FollowUpsScreen" },
-            new TableDataButtons { TableId = "Cases", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?CasesScreen" }
+            new TableDataButtons { TableId = "Cases", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?CasesScreen" },
+            new TableDataButtons { TableId = "CompanyManagers", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?CompanyManagersScreen" },
+            new TableDataButtons { TableId = "DeviceLinks", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?DeviceLinksScreen" },
+            new TableDataButtons { TableId = "Softwares", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?SoftwaresScreen" },
+            new TableDataButtons { TableId = "SoftwareInventory", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?SoftwareInventoryScreen" },
+            new TableDataButtons { TableId = "Domains", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?DomainsScreen" },
+            new TableDataButtons { TableId = "SSLCertificatesInventory", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?SSLCertificatesInventoryScreen" },
+            new TableDataButtons { TableId = "Hostings", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?HostingsScreen" },
+            new TableDataButtons { TableId = "HostingsInventory", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?HostingsInventoryScreen" }
             );
 
         modelBuilder.Entity<Template>().HasData(
             new Template { Name = "FOLLOWUP_TECHNICIAN", Type = TemplateType.EMAIL, Subject="{SUBJECT}", Contents = "<$--ESCRIBE ARRIBA--$> {PREV_CONTENT}", ParametersInfo = "{PREV_CONTENT}, {SUBJECT}", ConnectorName = "NOTIFICATION_EMAIL", Deletable = false },
             new Template { Name = "FOLLOWUP_CLIENT", Type = TemplateType.EMAIL, Subject = "{SUBJECT}", Contents = "{PREV_CONTENT}", ParametersInfo = "{PREV_CONTENT}, {SUBJECT}", ConnectorName = "NOTIFICATION_EMAIL", Deletable = false },
             new Template { Name = "NEW_CASE_CLIENT", Type = TemplateType.EMAIL, Subject = "Nuevo caso {CASE_ID}", Contents = "Se ha creado un nuevo caso {CASE_ID}", ParametersInfo = "{CASE_ID}", ConnectorName = "NOTIFICATION_EMAIL", Deletable = false }
-
             );
 
         modelBuilder.Entity<GenericListRecord>().HasData(
@@ -112,6 +182,9 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
             new GenericListRecord { Id = "DepartmentsContabilidad", Type = GenericListRecordType.SYSTEM, Text = "Contabilidad", Category = "Departments" },
             new GenericListRecord { Id = "DepartmentsDireccion", Type = GenericListRecordType.SYSTEM, Text = "Direccion", Category = "Departments" },
             new GenericListRecord { Id = "DepartmentsRRHH", Type = GenericListRecordType.SYSTEM, Text = "RRHH", Category = "Departments" },
+
+            new GenericListRecord { Id = "JobPositionCEO", Type = GenericListRecordType.SYSTEM, Text = "CEO", Category = "JobPosition" },
+            new GenericListRecord { Id = "JobPositionEmplyee", Type = GenericListRecordType.SYSTEM, Text = "Empleado", Category = "JobPosition" },
 
             // CaseStatus
             new GenericListRecord { Id = "CaseStatusNew", Type = GenericListRecordType.SYSTEM, Text = "Nuevo", Category = "CaseStatus" },
@@ -163,6 +236,19 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
             new GenericListRecord { Id = "OperatingSystemAndroid", Type = GenericListRecordType.SYSTEM, Text = "Android", Category = "OperatingSystem" },
             new GenericListRecord { Id = "OperatingSystemIOS", Type = GenericListRecordType.SYSTEM, Text = "iOS", Category = "OperatingSystem" },
 
+            // SoftwareName
+            new GenericListRecord { Id = "SoftwareNameAdobeAcrobat", Type = GenericListRecordType.SYSTEM, Text = "Adobe Acrobat", Category = "SoftwareName" },
+            new GenericListRecord { Id = "SoftwareNameMicrosoft365", Type = GenericListRecordType.SYSTEM, Text = "Microsoft 365", Category = "SoftwareName" },
+            new GenericListRecord { Id = "SoftwareNameAutocad", Type = GenericListRecordType.SYSTEM, Text = "Autocad", Category = "SoftwareName" },
+            new GenericListRecord { Id = "SoftwareNameSage", Type = GenericListRecordType.SYSTEM, Text = "Sage", Category = "SoftwareName" },
+            new GenericListRecord { Id = "SoftwareNameTeamViewer", Type = GenericListRecordType.SYSTEM, Text = "TeamViewer", Category = "SoftwareName" },
+
+            // SoftwareType
+            new GenericListRecord { Id = "SoftwareTypeSecurity", Type = GenericListRecordType.SYSTEM, Text = "Seguridad", Category = "SoftwareType" },
+            new GenericListRecord { Id = "SoftwareTypeOperativeSystem", Type = GenericListRecordType.SYSTEM, Text = "Sistema operativo", Category = "SoftwareType" },
+            new GenericListRecord { Id = "SoftwareTypeManagement", Type = GenericListRecordType.SYSTEM, Text = "Gestión", Category = "SoftwareType" },
+            new GenericListRecord { Id = "SoftwareTypeDesign", Type = GenericListRecordType.SYSTEM, Text = "Diseño", Category = "SoftwareType" },
+
             // Processors
             new GenericListRecord { Id = "ProcessorXeon", Type = GenericListRecordType.SYSTEM, Text = "Xeon", Category = "Processor" },
             new GenericListRecord { Id = "ProcessorIntelI5", Type = GenericListRecordType.SYSTEM, Text = "Intel i5", Category = "Processor" },
@@ -189,6 +275,23 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
 
             // Suppliers
             new GenericListRecord { Id = "SupplierNutec", Type = GenericListRecordType.SYSTEM, Text = "Nutec", Category = "Supplier" },
+
+            // DnsExtension
+            new GenericListRecord { Id = "DnsExtensionCAT", Type = GenericListRecordType.SYSTEM, Text = ".cat", Category = "DnsExtension" },
+            new GenericListRecord { Id = "DnsExtensionES", Type = GenericListRecordType.SYSTEM, Text = ".es", Category = "DnsExtension" },
+            new GenericListRecord { Id = "DnsExtensionCOM", Type = GenericListRecordType.SYSTEM, Text = ".com", Category = "DnsExtension" },
+            new GenericListRecord { Id = "DnsExtensionINFO", Type = GenericListRecordType.SYSTEM, Text = ".info", Category = "DnsExtension" },
+            new GenericListRecord { Id = "DnsExtensionEDU", Type = GenericListRecordType.SYSTEM, Text = ".edu", Category = "DnsExtension" },
+
+            // SSL Cert Type
+            new GenericListRecord { Id = "SSLCertTypeWildCard", Type = GenericListRecordType.SYSTEM, Text = "WildCard", Category = "SSLCertType" },
+            new GenericListRecord { Id = "SSLCertTypeDV", Type = GenericListRecordType.SYSTEM, Text = "DV (Verifica URL)", Category = "SSLCertType" },
+            new GenericListRecord { Id = "SSLCertTypeOV", Type = GenericListRecordType.SYSTEM, Text = "OV (Verifica organización)", Category = "SSLCertType" },
+
+            // HostingSystem
+            new GenericListRecord { Id = "HostingSystemPlesk", Type = GenericListRecordType.SYSTEM, Text = "Plesk", Category = "HostingSystem" },
+            new GenericListRecord { Id = "HostingSystemOther", Type = GenericListRecordType.SYSTEM, Text = "Otro", Category = "HostingSystem" },
+
 
             // IP Masks
             new GenericListRecord { Id = "IPMask8", Type = GenericListRecordType.SYSTEM, Text = "8", Category = "IPMask" },

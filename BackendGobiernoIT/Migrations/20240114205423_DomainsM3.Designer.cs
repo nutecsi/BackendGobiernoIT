@@ -4,6 +4,7 @@ using BackendGobiernoIT.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackendGobiernoIT.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240114205423_DomainsM3")]
+    partial class DomainsM3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1665,20 +1668,6 @@ namespace BackendGobiernoIT.Migrations
                         },
                         new
                         {
-                            Id = "HostingSystemPlesk",
-                            Category = "HostingSystem",
-                            Text = "Plesk",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "HostingSystemOther",
-                            Category = "HostingSystem",
-                            Text = "Otro",
-                            Type = 0
-                        },
-                        new
-                        {
                             Id = "IPMask8",
                             Category = "IPMask",
                             Text = "8",
@@ -2376,7 +2365,7 @@ namespace BackendGobiernoIT.Migrations
                             Create = "Create",
                             Delete = "Delete",
                             Export = "Export",
-                            Name = "SSLCertificatesInventory",
+                            Name = "Domains",
                             Read = "Read",
                             Update = "Update"
                         },
@@ -2386,7 +2375,7 @@ namespace BackendGobiernoIT.Migrations
                             Create = "Create",
                             Delete = "Delete",
                             Export = "Export",
-                            Name = "Hostings",
+                            Name = "Domains",
                             Read = "Read",
                             Update = "Update"
                         },
@@ -2396,7 +2385,7 @@ namespace BackendGobiernoIT.Migrations
                             Create = "Create",
                             Delete = "Delete",
                             Export = "Export",
-                            Name = "HostingsInventory",
+                            Name = "Domains",
                             Read = "Read",
                             Update = "Update"
                         });
@@ -2798,21 +2787,21 @@ namespace BackendGobiernoIT.Migrations
                             TableId = "SSLCertificatesInventory",
                             ButtonName = "new",
                             Image = "punta.png",
-                            OnClick = "splitScreenOverlay?SSLCertificatesInventoryScreen"
+                            OnClick = "splitScreenOverlay?DomainsScreen"
                         },
                         new
                         {
                             TableId = "Hostings",
                             ButtonName = "new",
                             Image = "punta.png",
-                            OnClick = "splitScreenOverlay?HostingsScreen"
+                            OnClick = "splitScreenOverlay?DomainsScreen"
                         },
                         new
                         {
                             TableId = "HostingsInventory",
                             ButtonName = "new",
                             Image = "punta.png",
-                            OnClick = "splitScreenOverlay?HostingsInventoryScreen"
+                            OnClick = "splitScreenOverlay?DomainsScreen"
                         });
                 });
 
@@ -3843,9 +3832,6 @@ namespace BackendGobiernoIT.Migrations
                     b.Property<bool>("DnsServicesActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("DomainId")
-                        .HasColumnType("int");
-
                     b.Property<int>("HostingId")
                         .HasColumnType("int");
 
@@ -3864,8 +3850,6 @@ namespace BackendGobiernoIT.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
-
-                    b.HasIndex("DomainId");
 
                     b.HasIndex("HostingId");
 
@@ -3910,7 +3894,7 @@ namespace BackendGobiernoIT.Migrations
 
                     b.Property<string>("CertTypeId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
@@ -3923,8 +3907,6 @@ namespace BackendGobiernoIT.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CertTypeId");
 
                     b.ToTable("SSLCertificatesInventory");
                 });
@@ -4875,12 +4857,6 @@ namespace BackendGobiernoIT.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("BackendGobiernoIT.Models.Domain", "Domain")
-                        .WithMany()
-                        .HasForeignKey("DomainId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("BackendGobiernoIT.Models.Hosting", "Hosting")
                         .WithMany()
                         .HasForeignKey("HostingId")
@@ -4893,8 +4869,6 @@ namespace BackendGobiernoIT.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Company");
-
-                    b.Navigation("Domain");
 
                     b.Navigation("Hosting");
 
@@ -4910,17 +4884,6 @@ namespace BackendGobiernoIT.Migrations
                         .IsRequired();
 
                     b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("BackendGobiernoIT.Models.SSLCertificate", b =>
-                {
-                    b.HasOne("BackendCore.Lib.Models.GenericListRecord", "CertType")
-                        .WithMany()
-                        .HasForeignKey("CertTypeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("CertType");
                 });
 
             modelBuilder.Entity("BackendGobiernoIT.Models.Software", b =>

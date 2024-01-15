@@ -17,15 +17,17 @@ public class Device
     [Required]
     public string DeviceName { get; set; }
 
-    public string DeviceTypeId { get; set; } // Clave foránea opcional para GenericListRecord
+    public string? DeviceTypeId { get; set; } // Clave foránea opcional para GenericListRecord
 
-    public string ManufacturerId { get; set; } // Clave foránea opcional para GenericListRecord
+    public string? ManufacturerId { get; set; } // Clave foránea opcional para GenericListRecord
 
-    public string ManufacturerSerialNumber { get; set; }
+    public string? ManufacturerSerialNumber { get; set; }
 
-    public string InternalSerialNumber { get; set; }
+    public string? InternalSerialNumber { get; set; }
 
-    public bool IsInMaintenance { get; set; } // Opcional
+    public bool? IsInMaintenance { get; set; } // Opcional
+
+    public bool? IsInCloud { get; set; }
 
     public int WorkCenterId { get; set; } // Clave foránea opcional para WorkCenter
 
@@ -74,13 +76,13 @@ public class Device
 
     // Relación con GenericListRecord para campos de listas
     [ForeignKey("DeviceTypeId"), DeleteBehavior(DeleteBehavior.NoAction)]
-    public virtual GenericListRecord DeviceType { get; set; }
+    public virtual GenericListRecord? DeviceType { get; set; }
 
     [ForeignKey("ManufacturerId"), DeleteBehavior(DeleteBehavior.NoAction)]
-    public virtual GenericListRecord Manufacturer { get; set; }
+    public virtual GenericListRecord? Manufacturer { get; set; }
 
     [ForeignKey("OperatingSystemId"), DeleteBehavior(DeleteBehavior.NoAction)]
-    public virtual GenericListRecord OperatingSystem { get; set; }
+    public virtual GenericListRecord? OperatingSystem { get; set; }
 
     [ForeignKey("InternalIPMaskId"), DeleteBehavior(DeleteBehavior.NoAction)]
     public virtual GenericListRecord? InternalIPMask { get; set; }
@@ -89,22 +91,22 @@ public class Device
     public virtual GenericListRecord? ExternalIPMask { get; set; }
 
     [ForeignKey("ProcessorId"), DeleteBehavior(DeleteBehavior.NoAction)]
-    public virtual GenericListRecord Processor { get; set; }
+    public virtual GenericListRecord? Processor { get; set; }
 
     [ForeignKey("RAMId"), DeleteBehavior(DeleteBehavior.NoAction)]
-    public virtual GenericListRecord RAM { get; set; }
+    public virtual GenericListRecord? RAM { get; set; }
 
     [ForeignKey("TypeHD1Id"), DeleteBehavior(DeleteBehavior.NoAction)]
-    public virtual GenericListRecord TypeHD1 { get; set; }
+    public virtual GenericListRecord? TypeHD1 { get; set; }
 
     [ForeignKey("TypeHD2Id"), DeleteBehavior(DeleteBehavior.NoAction)]
-    public virtual GenericListRecord TypeHD2 { get; set; }
+    public virtual GenericListRecord? TypeHD2 { get; set; }
 
     [ForeignKey("TypeHD3Id"), DeleteBehavior(DeleteBehavior.NoAction)]
-    public virtual GenericListRecord TypeHD3 { get; set; }
+    public virtual GenericListRecord? TypeHD3 { get; set; }
 
     [ForeignKey("SupplierId"), DeleteBehavior(DeleteBehavior.NoAction)]
-    public virtual GenericListRecord Supplier { get; set; }
+    public virtual GenericListRecord? Supplier { get; set; }
 
     // Relación con la empresa y centro de trabajo
     [ForeignKey("WorkCenterId")]

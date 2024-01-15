@@ -4,6 +4,7 @@ using BackendGobiernoIT.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackendGobiernoIT.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240114205822_DomainsM5")]
+    partial class DomainsM5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1661,20 +1664,6 @@ namespace BackendGobiernoIT.Migrations
                             Id = "SSLCertTypeOV",
                             Category = "SSLCertType",
                             Text = "OV (Verifica organización)",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "HostingSystemPlesk",
-                            Category = "HostingSystem",
-                            Text = "Plesk",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "HostingSystemOther",
-                            Category = "HostingSystem",
-                            Text = "Otro",
                             Type = 0
                         },
                         new
@@ -3843,9 +3832,6 @@ namespace BackendGobiernoIT.Migrations
                     b.Property<bool>("DnsServicesActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("DomainId")
-                        .HasColumnType("int");
-
                     b.Property<int>("HostingId")
                         .HasColumnType("int");
 
@@ -3864,8 +3850,6 @@ namespace BackendGobiernoIT.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
-
-                    b.HasIndex("DomainId");
 
                     b.HasIndex("HostingId");
 
@@ -4875,12 +4859,6 @@ namespace BackendGobiernoIT.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("BackendGobiernoIT.Models.Domain", "Domain")
-                        .WithMany()
-                        .HasForeignKey("DomainId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("BackendGobiernoIT.Models.Hosting", "Hosting")
                         .WithMany()
                         .HasForeignKey("HostingId")
@@ -4893,8 +4871,6 @@ namespace BackendGobiernoIT.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Company");
-
-                    b.Navigation("Domain");
 
                     b.Navigation("Hosting");
 

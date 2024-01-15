@@ -22,12 +22,14 @@ public class CompanyUser
 
     public int WorkCenterId { get; set; }
 
+    public string? JobPositionId { get; set; }
+
     [ForeignKey("GenericList")]
-    public string Department { get; set; }
+    public string? Department { get; set; }
     
     public string? Description { get; set; }
 
-    public string Phone { get; set; } // Format: "country code + number"
+    public string? Phone { get; set; } // Format: "country code + number"
 
     public string? Extension { get; set; }
 
@@ -35,14 +37,9 @@ public class CompanyUser
 
     // Relación con EmailInfo
     public virtual ICollection<EmailInfo> Emails { get; set; }
-
-    // Relación con la empresa
     public virtual Company Company { get; set; }
-
-    // Relación con el centro de trabajo
     public virtual WorkCenter WorkCenter { get; set; }
-
-    public virtual GenericListRecord GenericList { get; set; }
-
+    public virtual GenericListRecord? GenericList { get; set; }
+    public virtual GenericListRecord? JobPosition { get; set; }
     public virtual Group Group { get; set; }
 }
