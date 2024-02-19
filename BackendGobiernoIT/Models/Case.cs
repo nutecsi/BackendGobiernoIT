@@ -14,7 +14,9 @@ public class Case
     public int? RequesterClientId { get; set; } 
     public string? ResponsibleUserId { get; set; } 
     public int? HardwareInventoryId { get; set; } 
+    public bool Checklist { get; set; }
     public DateTime CreationDate { get; set; }
+    public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }
     public DateTime? ClosureDate { get; set; }
     public string? ClosingUserId { get; set; } // Usuario que cierra el caso

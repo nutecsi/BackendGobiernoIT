@@ -4,6 +4,7 @@ using BackendGobiernoIT.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackendGobiernoIT.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240219032903_SectionsV0")]
+    partial class SectionsV0
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2069,14 +2072,6 @@ namespace BackendGobiernoIT.Migrations
                         new
                         {
                             Name = "ApplicationTable"
-                        },
-                        new
-                        {
-                            Name = "SectionsToRequirementsTable"
-                        },
-                        new
-                        {
-                            Name = "RequirementsToSectionsTable"
                         });
                 });
 
@@ -2323,16 +2318,6 @@ namespace BackendGobiernoIT.Migrations
                             Delete = "Delete",
                             Export = "Export",
                             Name = "_TableDataPrimaryKeys",
-                            Read = "Read",
-                            Update = "Update"
-                        },
-                        new
-                        {
-                            Id = "TableDataViews",
-                            Create = "Create",
-                            Delete = "Delete",
-                            Export = "Export",
-                            Name = "_TableDataViews",
                             Read = "Read",
                             Update = "Update"
                         },
@@ -3257,26 +3242,6 @@ namespace BackendGobiernoIT.Migrations
                         },
                         new
                         {
-                            TableId = "TableDataViews",
-                            ColumnName = "UserId"
-                        },
-                        new
-                        {
-                            TableId = "TableDataViews",
-                            ColumnName = "TableId"
-                        },
-                        new
-                        {
-                            TableId = "TableDataViews",
-                            ColumnName = "Name"
-                        },
-                        new
-                        {
-                            TableId = "TableDataViews",
-                            ColumnName = "SectionId"
-                        },
-                        new
-                        {
                             TableId = "FileDescriptors",
                             ColumnName = "Id"
                         },
@@ -3476,11 +3441,6 @@ namespace BackendGobiernoIT.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("SectionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)")
-                        .HasDefaultValue("ApplicationTable");
-
                     b.Property<string>("Columns")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -3502,11 +3462,17 @@ namespace BackendGobiernoIT.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
+                    b.Property<string>("SectionId")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)")
+                        .HasDefaultValue("ApplicationTable");
+
                     b.Property<string>("Sorts")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId", "TableId", "Name", "SectionId");
+                    b.HasKey("UserId", "TableId", "Name");
 
                     b.HasIndex("SectionId");
 

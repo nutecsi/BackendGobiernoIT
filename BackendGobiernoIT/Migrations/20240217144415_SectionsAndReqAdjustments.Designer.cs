@@ -4,6 +4,7 @@ using BackendGobiernoIT.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackendGobiernoIT.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240217144415_SectionsAndReqAdjustments")]
+    partial class SectionsAndReqAdjustments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2003,9 +2006,7 @@ namespace BackendGobiernoIT.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Expires")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                        .HasColumnType("bit");
 
                     b.Property<string>("HelpHtml")
                         .HasColumnType("nvarchar(max)");
@@ -2014,24 +2015,16 @@ namespace BackendGobiernoIT.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsPublic")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsRequired")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsRequiredDocumentDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsUnique")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                        .HasColumnType("bit");
 
                     b.Property<string>("RequirementGroup")
                         .HasColumnType("nvarchar(max)");
@@ -2064,20 +2057,6 @@ namespace BackendGobiernoIT.Migrations
                     b.HasKey("Name");
 
                     b.ToTable("_Sections");
-
-                    b.HasData(
-                        new
-                        {
-                            Name = "ApplicationTable"
-                        },
-                        new
-                        {
-                            Name = "SectionsToRequirementsTable"
-                        },
-                        new
-                        {
-                            Name = "RequirementsToSectionsTable"
-                        });
                 });
 
             modelBuilder.Entity("BackendCore.Lib.Models.SecurityRole", b =>
@@ -2323,16 +2302,6 @@ namespace BackendGobiernoIT.Migrations
                             Delete = "Delete",
                             Export = "Export",
                             Name = "_TableDataPrimaryKeys",
-                            Read = "Read",
-                            Update = "Update"
-                        },
-                        new
-                        {
-                            Id = "TableDataViews",
-                            Create = "Create",
-                            Delete = "Delete",
-                            Export = "Export",
-                            Name = "_TableDataViews",
                             Read = "Read",
                             Update = "Update"
                         },
@@ -2986,13 +2955,6 @@ namespace BackendGobiernoIT.Migrations
                         },
                         new
                         {
-                            TableId = "RequirementDefinitionSectionLinks",
-                            ButtonName = "new",
-                            Image = "punta.png",
-                            OnClick = "splitScreenOverlay?RequirementDefinitionSectionLinks"
-                        },
-                        new
-                        {
                             TableId = "Companies",
                             ButtonName = "new",
                             Image = "punta.png",
@@ -3257,26 +3219,6 @@ namespace BackendGobiernoIT.Migrations
                         },
                         new
                         {
-                            TableId = "TableDataViews",
-                            ColumnName = "UserId"
-                        },
-                        new
-                        {
-                            TableId = "TableDataViews",
-                            ColumnName = "TableId"
-                        },
-                        new
-                        {
-                            TableId = "TableDataViews",
-                            ColumnName = "Name"
-                        },
-                        new
-                        {
-                            TableId = "TableDataViews",
-                            ColumnName = "SectionId"
-                        },
-                        new
-                        {
                             TableId = "FileDescriptors",
                             ColumnName = "Id"
                         },
@@ -3476,11 +3418,6 @@ namespace BackendGobiernoIT.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("SectionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)")
-                        .HasDefaultValue("ApplicationTable");
-
                     b.Property<string>("Columns")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -3506,9 +3443,7 @@ namespace BackendGobiernoIT.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId", "TableId", "Name", "SectionId");
-
-                    b.HasIndex("SectionId");
+                    b.HasKey("UserId", "TableId", "Name");
 
                     b.HasIndex("TableId");
 
@@ -4933,12 +4868,6 @@ namespace BackendGobiernoIT.Migrations
 
             modelBuilder.Entity("BackendCore.Lib.Models.TableDataView", b =>
                 {
-                    b.HasOne("BackendCore.Lib.Models.Section", "Section")
-                        .WithMany()
-                        .HasForeignKey("SectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BackendCore.Lib.Models.TableData", "Table")
                         .WithMany()
                         .HasForeignKey("TableId")
@@ -4950,8 +4879,6 @@ namespace BackendGobiernoIT.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Section");
 
                     b.Navigation("Table");
 

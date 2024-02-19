@@ -4,6 +4,7 @@ using BackendGobiernoIT.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackendGobiernoIT.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240214183022_AddedStartDate")]
+    partial class AddedStartDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1937,149 +1940,6 @@ namespace BackendGobiernoIT.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BackendCore.Lib.Models.Requirement", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatorUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DocumentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DocumentGroupId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DocumentUploadDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DocumentUploaderUserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ExpirationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("GroupId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RequirementDefinitionId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DocumentGroupId");
-
-                    b.HasIndex("GroupId");
-
-                    b.HasIndex("RequirementDefinitionId");
-
-                    b.ToTable("_Requirements");
-                });
-
-            modelBuilder.Entity("BackendCore.Lib.Models.RequirementDefinition", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime?>("DeactivationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ExpirationPeriod")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Expires")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<string>("HelpHtml")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsPublic")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<bool>("IsRequired")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<bool>("IsRequiredDocumentDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<bool>("IsUnique")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<string>("RequirementGroup")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Name");
-
-                    b.ToTable("_RequirementDefinitions");
-                });
-
-            modelBuilder.Entity("BackendCore.Lib.Models.RequirementDefinitionSectionLink", b =>
-                {
-                    b.Property<string>("RequirementDefinitionId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SectionId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("RequirementDefinitionId", "SectionId");
-
-                    b.HasIndex("SectionId");
-
-                    b.ToTable("_RequirementDefinitionSectionLinks");
-                });
-
-            modelBuilder.Entity("BackendCore.Lib.Models.Section", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Name");
-
-                    b.ToTable("_Sections");
-
-                    b.HasData(
-                        new
-                        {
-                            Name = "ApplicationTable"
-                        },
-                        new
-                        {
-                            Name = "SectionsToRequirementsTable"
-                        },
-                        new
-                        {
-                            Name = "RequirementsToSectionsTable"
-                        });
-                });
-
             modelBuilder.Entity("BackendCore.Lib.Models.SecurityRole", b =>
                 {
                     b.Property<int>("Id")
@@ -2328,16 +2188,6 @@ namespace BackendGobiernoIT.Migrations
                         },
                         new
                         {
-                            Id = "TableDataViews",
-                            Create = "Create",
-                            Delete = "Delete",
-                            Export = "Export",
-                            Name = "_TableDataViews",
-                            Read = "Read",
-                            Update = "Update"
-                        },
-                        new
-                        {
                             Id = "FileDescriptors",
                             Create = "Create",
                             Delete = "Delete",
@@ -2383,46 +2233,6 @@ namespace BackendGobiernoIT.Migrations
                             Delete = "Delete",
                             Export = "Export",
                             Name = "_Connectors",
-                            Read = "Read",
-                            Update = "Update"
-                        },
-                        new
-                        {
-                            Id = "Sections",
-                            Create = "Create",
-                            Delete = "Delete",
-                            Export = "Export",
-                            Name = "_Sections",
-                            Read = "Read",
-                            Update = "Update"
-                        },
-                        new
-                        {
-                            Id = "RequirementDefinitions",
-                            Create = "Create",
-                            Delete = "Delete",
-                            Export = "Export",
-                            Name = "_RequirementDefinitions",
-                            Read = "Read",
-                            Update = "Update"
-                        },
-                        new
-                        {
-                            Id = "Requirements",
-                            Create = "Create",
-                            Delete = "Delete",
-                            Export = "Export",
-                            Name = "_Requirements",
-                            Read = "Read",
-                            Update = "Update"
-                        },
-                        new
-                        {
-                            Id = "RequirementDefinitionSectionLinks",
-                            Create = "Create",
-                            Delete = "Delete",
-                            Export = "Export",
-                            Name = "_RequirementDefinitionSectionLinks",
                             Read = "Read",
                             Update = "Update"
                         },
@@ -2731,27 +2541,6 @@ namespace BackendGobiernoIT.Migrations
                         },
                         new
                         {
-                            Id = -8,
-                            AttributeType = "onClick:splitScreenOverlay?RequirementsScreen",
-                            ColumnsAffected = "*",
-                            TableId = "Requirements"
-                        },
-                        new
-                        {
-                            Id = -9,
-                            AttributeType = "onClick:splitScreenOverlay?RequirementDefinitionsScreen",
-                            ColumnsAffected = "*",
-                            TableId = "RequirementDefinitions"
-                        },
-                        new
-                        {
-                            Id = -10,
-                            AttributeType = "onClick:splitScreenOverlay?SectionsScreen",
-                            ColumnsAffected = "*",
-                            TableId = "Sections"
-                        },
-                        new
-                        {
                             Id = -1001,
                             AttributeType = "onClick:splitScreenOverlay?CompaniesScreen",
                             ColumnsAffected = "*",
@@ -2962,34 +2751,6 @@ namespace BackendGobiernoIT.Migrations
                             ButtonName = "new",
                             Image = "punta.png",
                             OnClick = "splitScreenOverlay?ConnectorsScreen"
-                        },
-                        new
-                        {
-                            TableId = "Requirements",
-                            ButtonName = "new",
-                            Image = "punta.png",
-                            OnClick = "splitScreenOverlay?RequirementsScreen"
-                        },
-                        new
-                        {
-                            TableId = "RequirementDefinitions",
-                            ButtonName = "new",
-                            Image = "punta.png",
-                            OnClick = "splitScreenOverlay?RequirementDefinitionsScreen"
-                        },
-                        new
-                        {
-                            TableId = "Sections",
-                            ButtonName = "new",
-                            Image = "punta.png",
-                            OnClick = "splitScreenOverlay?SectionsScreen"
-                        },
-                        new
-                        {
-                            TableId = "RequirementDefinitionSectionLinks",
-                            ButtonName = "new",
-                            Image = "punta.png",
-                            OnClick = "splitScreenOverlay?RequirementDefinitionSectionLinks"
                         },
                         new
                         {
@@ -3257,26 +3018,6 @@ namespace BackendGobiernoIT.Migrations
                         },
                         new
                         {
-                            TableId = "TableDataViews",
-                            ColumnName = "UserId"
-                        },
-                        new
-                        {
-                            TableId = "TableDataViews",
-                            ColumnName = "TableId"
-                        },
-                        new
-                        {
-                            TableId = "TableDataViews",
-                            ColumnName = "Name"
-                        },
-                        new
-                        {
-                            TableId = "TableDataViews",
-                            ColumnName = "SectionId"
-                        },
-                        new
-                        {
                             TableId = "FileDescriptors",
                             ColumnName = "Id"
                         },
@@ -3299,31 +3040,6 @@ namespace BackendGobiernoIT.Migrations
                         {
                             TableId = "Connectors",
                             ColumnName = "Name"
-                        },
-                        new
-                        {
-                            TableId = "Requirements",
-                            ColumnName = "Id"
-                        },
-                        new
-                        {
-                            TableId = "RequirementDefinitions",
-                            ColumnName = "Name"
-                        },
-                        new
-                        {
-                            TableId = "Sections",
-                            ColumnName = "Name"
-                        },
-                        new
-                        {
-                            TableId = "RequirementDefinitionSectionLinks",
-                            ColumnName = "RequirementDefinitionId"
-                        },
-                        new
-                        {
-                            TableId = "RequirementDefinitionSectionLinks",
-                            ColumnName = "SectionId"
                         },
                         new
                         {
@@ -3476,11 +3192,6 @@ namespace BackendGobiernoIT.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("SectionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)")
-                        .HasDefaultValue("ApplicationTable");
-
                     b.Property<string>("Columns")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -3506,9 +3217,7 @@ namespace BackendGobiernoIT.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId", "TableId", "Name", "SectionId");
-
-                    b.HasIndex("SectionId");
+                    b.HasKey("UserId", "TableId", "Name");
 
                     b.HasIndex("TableId");
 
@@ -4778,52 +4487,6 @@ namespace BackendGobiernoIT.Migrations
                     b.Navigation("PermissionsList");
                 });
 
-            modelBuilder.Entity("BackendCore.Lib.Models.Requirement", b =>
-                {
-                    b.HasOne("BackendCore.Lib.Models.Group", "DocumentGroup")
-                        .WithMany()
-                        .HasForeignKey("DocumentGroupId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("BackendCore.Lib.Models.Group", "Group")
-                        .WithMany()
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("BackendCore.Lib.Models.RequirementDefinition", "RequirementDefinition")
-                        .WithMany()
-                        .HasForeignKey("RequirementDefinitionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DocumentGroup");
-
-                    b.Navigation("Group");
-
-                    b.Navigation("RequirementDefinition");
-                });
-
-            modelBuilder.Entity("BackendCore.Lib.Models.RequirementDefinitionSectionLink", b =>
-                {
-                    b.HasOne("BackendCore.Lib.Models.RequirementDefinition", "RequirementDefinition")
-                        .WithMany()
-                        .HasForeignKey("RequirementDefinitionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BackendCore.Lib.Models.Section", "Section")
-                        .WithMany()
-                        .HasForeignKey("SectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RequirementDefinition");
-
-                    b.Navigation("Section");
-                });
-
             modelBuilder.Entity("BackendCore.Lib.Models.TableData", b =>
                 {
                     b.HasOne("BackendCore.Lib.Models.PermissionsList", "CreateClaim")
@@ -4933,12 +4596,6 @@ namespace BackendGobiernoIT.Migrations
 
             modelBuilder.Entity("BackendCore.Lib.Models.TableDataView", b =>
                 {
-                    b.HasOne("BackendCore.Lib.Models.Section", "Section")
-                        .WithMany()
-                        .HasForeignKey("SectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BackendCore.Lib.Models.TableData", "Table")
                         .WithMany()
                         .HasForeignKey("TableId")
@@ -4950,8 +4607,6 @@ namespace BackendGobiernoIT.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Section");
 
                     b.Navigation("Table");
 

@@ -10,12 +10,9 @@ public class Software
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
-    [ForeignKey("SoftwareFK")]  public string SoftwareId { get; set; }
+    public string SoftwareName { get; set; }
     public string CategoryId { get; set; }
     public string ManufacturerId { get; set; }
-
-    [DeleteBehavior(DeleteBehavior.NoAction)]
-    public virtual GenericListRecord SoftwareFK { get; set; }
 
     [DeleteBehavior(DeleteBehavior.NoAction)]
     public virtual GenericListRecord Category { get; set; }
