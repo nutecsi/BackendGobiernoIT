@@ -21,6 +21,7 @@ public class HostingItem
 
     public string? Description { get; set; }
 
+
     [DeleteBehavior(DeleteBehavior.NoAction)] public virtual Company Company { get; set; }
     [DeleteBehavior(DeleteBehavior.NoAction)] public virtual Domain Domain { get; set; }
     [DeleteBehavior(DeleteBehavior.NoAction)] public virtual Hosting Hosting { get; set; }

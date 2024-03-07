@@ -4,6 +4,7 @@ using BackendGobiernoIT.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackendGobiernoIT.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240222144952_RequirementDefinitionCat")]
+    partial class RequirementDefinitionCat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2917,42 +2920,42 @@ namespace BackendGobiernoIT.Migrations
                         {
                             TableId = "NavbarNodes",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?NavbarEditorScreen"
                         },
                         new
                         {
                             TableId = "GenericLists",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?GenericListsScreen"
                         },
                         new
                         {
                             TableId = "Users",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?UserScreen"
                         },
                         new
                         {
                             TableId = "Roles",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?RolesScreen"
                         },
                         new
                         {
                             TableId = "SecurityRoles",
                             ButtonName = "new",
-                            Image = "plus ",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?SecurityRolesScreen"
                         },
                         new
                         {
                             TableId = "Templates",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?TemplatesScreen"
                         },
                         new
@@ -2966,168 +2969,168 @@ namespace BackendGobiernoIT.Migrations
                         {
                             TableId = "Requirements",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?RequirementsScreen"
                         },
                         new
                         {
                             TableId = "RequirementDefinitions",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?RequirementDefinitionsScreen"
                         },
                         new
                         {
                             TableId = "Sections",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?SectionsScreen"
                         },
                         new
                         {
                             TableId = "RequirementDefinitionSectionLinks",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?RequirementDefinitionSectionLinks"
                         },
                         new
                         {
                             TableId = "Companies",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?CompaniesScreen"
                         },
                         new
                         {
                             TableId = "EmailDomains",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?EmailDomainsScreen"
                         },
                         new
                         {
                             TableId = "Phones",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?PhonesScreen"
                         },
                         new
                         {
                             TableId = "WorkCenters",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?WorkCentersScreen"
                         },
                         new
                         {
                             TableId = "CompanyUsers",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?CompanyUsersScreen"
                         },
                         new
                         {
                             TableId = "EmailsInfo",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?EmailsInfoScreen"
                         },
                         new
                         {
                             TableId = "Devices",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?DevicesScreen"
                         },
                         new
                         {
                             TableId = "FollowUps",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?FollowUpsScreen"
                         },
                         new
                         {
                             TableId = "Cases",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?CasesScreen"
                         },
                         new
                         {
                             TableId = "CompanyManagers",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?CompanyManagersScreen"
                         },
                         new
                         {
                             TableId = "DeviceLinks",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?DeviceLinksScreen"
                         },
                         new
                         {
                             TableId = "Softwares",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?SoftwaresScreen"
                         },
                         new
                         {
                             TableId = "SoftwareInventory",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?SoftwareInventoryScreen"
                         },
                         new
                         {
                             TableId = "Domains",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?DomainsScreen"
                         },
                         new
                         {
                             TableId = "SSLCertificatesInventory",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?SSLCertificatesInventoryScreen"
                         },
                         new
                         {
                             TableId = "Hostings",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?HostingsScreen"
                         },
                         new
                         {
                             TableId = "HostingsInventory",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?HostingsInventoryScreen"
                         },
                         new
                         {
                             TableId = "Backups",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?BackupsScreen"
                         },
                         new
                         {
                             TableId = "BackupDeviceLinks",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?BackupDeviceLinksScreen"
                         },
                         new
                         {
                             TableId = "CaseDependencies",
                             ButtonName = "new",
-                            Image = "plus",
+                            Image = "punta.png",
                             OnClick = "splitScreenOverlay?CaseDependenciesScreen"
                         });
                 });
@@ -4393,9 +4396,6 @@ namespace BackendGobiernoIT.Migrations
 
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
-
-                    b.Property<string>("GroupId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("RenovationDate")
                         .HasColumnType("datetime2");

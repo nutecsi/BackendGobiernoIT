@@ -13,6 +13,7 @@ public class SSLCertificate
     public string URL { get; set; }
     public string CertTypeId { get; set; }
     public DateTime? RenovationDate { get; set; }
+    public string? GroupId { get; set; }    
 
     [DeleteBehavior(DeleteBehavior.NoAction)] public virtual GenericListRecord CertType { get; set; }
 }

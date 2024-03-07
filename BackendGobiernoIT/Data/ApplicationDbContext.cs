@@ -168,26 +168,26 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
             );
 
         modelBuilder.Entity<TableDataButtons>().HasData(
-            new TableDataButtons { TableId = "Companies", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?CompaniesScreen" },
-            new TableDataButtons { TableId = "EmailDomains", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?EmailDomainsScreen" },
-            new TableDataButtons { TableId = "Phones", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?PhonesScreen" },
-            new TableDataButtons { TableId = "WorkCenters", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?WorkCentersScreen" },
-            new TableDataButtons { TableId = "CompanyUsers", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?CompanyUsersScreen" },
-            new TableDataButtons { TableId = "EmailsInfo", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?EmailsInfoScreen" },
-            new TableDataButtons { TableId = "Devices", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?DevicesScreen" },
-            new TableDataButtons { TableId = "FollowUps", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?FollowUpsScreen" },
-            new TableDataButtons { TableId = "Cases", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?CasesScreen" },
-            new TableDataButtons { TableId = "CompanyManagers", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?CompanyManagersScreen" },
-            new TableDataButtons { TableId = "DeviceLinks", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?DeviceLinksScreen" },
-            new TableDataButtons { TableId = "Softwares", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?SoftwaresScreen" },
-            new TableDataButtons { TableId = "SoftwareInventory", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?SoftwareInventoryScreen" },
-            new TableDataButtons { TableId = "Domains", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?DomainsScreen" },
-            new TableDataButtons { TableId = "SSLCertificatesInventory", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?SSLCertificatesInventoryScreen" },
-            new TableDataButtons { TableId = "Hostings", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?HostingsScreen" },
-            new TableDataButtons { TableId = "HostingsInventory", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?HostingsInventoryScreen" },
-            new TableDataButtons { TableId = "Backups", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?BackupsScreen" },
-            new TableDataButtons { TableId = "BackupDeviceLinks", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?BackupDeviceLinksScreen" },
-            new TableDataButtons { TableId = "CaseDependencies", ButtonName = "new", Image = "punta.png", OnClick = "splitScreenOverlay?CaseDependenciesScreen" }
+            new TableDataButtons { TableId = "Companies", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?CompaniesScreen" },
+            new TableDataButtons { TableId = "EmailDomains", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?EmailDomainsScreen" },
+            new TableDataButtons { TableId = "Phones", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?PhonesScreen" },
+            new TableDataButtons { TableId = "WorkCenters", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?WorkCentersScreen" },
+            new TableDataButtons { TableId = "CompanyUsers", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?CompanyUsersScreen" },
+            new TableDataButtons { TableId = "EmailsInfo", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?EmailsInfoScreen" },
+            new TableDataButtons { TableId = "Devices", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?DevicesScreen" },
+            new TableDataButtons { TableId = "FollowUps", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?FollowUpsScreen" },
+            new TableDataButtons { TableId = "Cases", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?CasesScreen" },
+            new TableDataButtons { TableId = "CompanyManagers", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?CompanyManagersScreen" },
+            new TableDataButtons { TableId = "DeviceLinks", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?DeviceLinksScreen" },
+            new TableDataButtons { TableId = "Softwares", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?SoftwaresScreen" },
+            new TableDataButtons { TableId = "SoftwareInventory", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?SoftwareInventoryScreen" },
+            new TableDataButtons { TableId = "Domains", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?DomainsScreen" },
+            new TableDataButtons { TableId = "SSLCertificatesInventory", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?SSLCertificatesInventoryScreen" },
+            new TableDataButtons { TableId = "Hostings", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?HostingsScreen" },
+            new TableDataButtons { TableId = "HostingsInventory", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?HostingsInventoryScreen" },
+            new TableDataButtons { TableId = "Backups", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?BackupsScreen" },
+            new TableDataButtons { TableId = "BackupDeviceLinks", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?BackupDeviceLinksScreen" },
+            new TableDataButtons { TableId = "CaseDependencies", ButtonName = "new", Image = "plus", OnClick = "splitScreenOverlay?CaseDependenciesScreen" }
 
             );
 
