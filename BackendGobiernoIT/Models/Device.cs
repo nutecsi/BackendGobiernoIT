@@ -73,8 +73,13 @@ public class Device
 
     public DateTime? WarrantyExpiration { get; set; } // Opcional
 
+    public DateTime? DeactivationDate { get; set; }
 
-    // Relación con GenericListRecord para campos de listas
+    public int? MainUserId { get; set; }
+
+    [ForeignKey("MainUserId"), DeleteBehavior(DeleteBehavior.NoAction)]
+    public virtual CompanyUser? MainUser { get; set; }
+
     [ForeignKey("DeviceTypeId"), DeleteBehavior(DeleteBehavior.NoAction)]
     public virtual GenericListRecord? DeviceType { get; set; }
 

@@ -4,6 +4,7 @@ using BackendGobiernoIT.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackendGobiernoIT.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240319134944_TableConditionalFilters3")]
+    partial class TableConditionalFilters3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -313,9 +316,6 @@ namespace BackendGobiernoIT.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NumLibre1")
-                        .HasColumnType("int");
-
                     b.Property<int?>("Position")
                         .HasColumnType("int");
 
@@ -324,9 +324,6 @@ namespace BackendGobiernoIT.Migrations
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TxtLibre1")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Type")
@@ -596,20 +593,6 @@ namespace BackendGobiernoIT.Migrations
                             Id = "Me",
                             Category = "NavbarNodeType",
                             Text = "Me",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "AgrupationL1",
-                            Category = "NavbarNodeType",
-                            Text = "AgrupationL1",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "InlineAgrupationL1",
-                            Category = "NavbarNodeType",
-                            Text = "InlineAgrupationL1",
                             Type = 0
                         },
                         new
@@ -1730,27 +1713,6 @@ namespace BackendGobiernoIT.Migrations
                             Id = "IPMask32",
                             Category = "IPMask",
                             Text = "32",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "CompanyTypeClient",
-                            Category = "CompanyType",
-                            Text = "Cliente",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "CompanyTypeSupplier",
-                            Category = "CompanyType",
-                            Text = "Proveedor",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = "CompanyTypeClientAndSupplier",
-                            Category = "CompanyType",
-                            Text = "Cliente y Proveedor",
                             Type = 0
                         });
                 });
@@ -3220,13 +3182,7 @@ namespace BackendGobiernoIT.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TableId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TableId");
 
                     b.ToTable("_TableDataConditionalFilters");
                 });
@@ -3803,14 +3759,8 @@ namespace BackendGobiernoIT.Migrations
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("DeactivationDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("DeviceId")
-                        .HasColumnType("int");
 
                     b.Property<bool>("InCloud")
                         .HasColumnType("bit");
@@ -3828,11 +3778,24 @@ namespace BackendGobiernoIT.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.HasIndex("DeviceId");
-
                     b.HasIndex("SoftwareId");
 
                     b.ToTable("Backups");
+                });
+
+            modelBuilder.Entity("BackendGobiernoIT.Models.BackupDeviceLink", b =>
+                {
+                    b.Property<int>("BackupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DeviceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BackupId", "DeviceId");
+
+                    b.HasIndex("DeviceId");
+
+                    b.ToTable("BackupDeviceLinks");
                 });
 
             modelBuilder.Entity("BackendGobiernoIT.Models.Case", b =>
@@ -3863,9 +3826,6 @@ namespace BackendGobiernoIT.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CompanyUserId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
@@ -3924,8 +3884,6 @@ namespace BackendGobiernoIT.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.HasIndex("CompanyUserId");
-
                     b.HasIndex("CreatorUserId");
 
                     b.HasIndex("DependantTaskId");
@@ -3975,11 +3933,6 @@ namespace BackendGobiernoIT.Migrations
                     b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("HasItSupport")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
                     b.Property<string>("LegalName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -3988,17 +3941,9 @@ namespace BackendGobiernoIT.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TypeId")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)")
-                        .HasDefaultValue("CompanyTypeClient");
-
                     b.HasKey("Id");
 
                     b.HasIndex("GroupId");
-
-                    b.HasIndex("TypeId");
 
                     b.ToTable("Companies");
                 });
@@ -4040,9 +3985,6 @@ namespace BackendGobiernoIT.Migrations
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("DeactivationDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Department")
                         .HasColumnType("nvarchar(450)");
 
@@ -4057,11 +3999,6 @@ namespace BackendGobiernoIT.Migrations
 
                     b.Property<string>("Extension")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("External")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
 
                     b.Property<string>("FullName")
                         .IsRequired()
@@ -4114,9 +4051,6 @@ namespace BackendGobiernoIT.Migrations
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("DeactivationDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -4163,9 +4097,6 @@ namespace BackendGobiernoIT.Migrations
 
                     b.Property<bool?>("IsInMaintenance")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("MainUserId")
-                        .HasColumnType("int");
 
                     b.Property<string>("ManufacturerId")
                         .HasColumnType("nvarchar(450)");
@@ -4216,8 +4147,6 @@ namespace BackendGobiernoIT.Migrations
                     b.HasIndex("ExternalIPMaskId");
 
                     b.HasIndex("InternalIPMaskId");
-
-                    b.HasIndex("MainUserId");
 
                     b.HasIndex("ManufacturerId");
 
@@ -4287,9 +4216,7 @@ namespace BackendGobiernoIT.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ProviderId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RegistradorId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -4301,8 +4228,6 @@ namespace BackendGobiernoIT.Migrations
                     b.HasIndex("DomainExtensionId");
 
                     b.HasIndex("ProviderId");
-
-                    b.HasIndex("RegistradorId");
 
                     b.ToTable("Domains");
                 });
@@ -4404,9 +4329,6 @@ namespace BackendGobiernoIT.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("DeactivationDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -4535,9 +4457,6 @@ namespace BackendGobiernoIT.Migrations
                     b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("RenovationDate")
                         .HasColumnType("datetime2");
 
@@ -4548,8 +4467,6 @@ namespace BackendGobiernoIT.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CertTypeId");
-
-                    b.HasIndex("GroupId");
 
                     b.ToTable("SSLCertificatesInventory");
                 });
@@ -4597,17 +4514,8 @@ namespace BackendGobiernoIT.Migrations
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GroupId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("NumberOfLicences")
                         .HasColumnType("int");
-
-                    b.Property<string>("ProviderId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("SoftwareId")
                         .HasColumnType("int");
@@ -4619,10 +4527,6 @@ namespace BackendGobiernoIT.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
-
-                    b.HasIndex("GroupId");
-
-                    b.HasIndex("ProviderId");
 
                     b.HasIndex("SoftwareId");
 
@@ -5062,17 +4966,6 @@ namespace BackendGobiernoIT.Migrations
                     b.Navigation("TableData");
                 });
 
-            modelBuilder.Entity("BackendCore.Lib.Models.TableDataConditionalFilter", b =>
-                {
-                    b.HasOne("BackendCore.Lib.Models.TableData", "Table")
-                        .WithMany()
-                        .HasForeignKey("TableId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Table");
-                });
-
             modelBuilder.Entity("BackendCore.Lib.Models.TableDataPersistentFilters", b =>
                 {
                     b.HasOne("BackendCore.Lib.Models.TableData", "TableData")
@@ -5213,11 +5106,6 @@ namespace BackendGobiernoIT.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("BackendGobiernoIT.Models.Device", "Device")
-                        .WithMany()
-                        .HasForeignKey("DeviceId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.HasOne("BackendGobiernoIT.Models.Software", "Software")
                         .WithMany()
                         .HasForeignKey("SoftwareId")
@@ -5226,9 +5114,26 @@ namespace BackendGobiernoIT.Migrations
 
                     b.Navigation("Company");
 
-                    b.Navigation("Device");
-
                     b.Navigation("Software");
+                });
+
+            modelBuilder.Entity("BackendGobiernoIT.Models.BackupDeviceLink", b =>
+                {
+                    b.HasOne("BackendGobiernoIT.Models.Backup", "Backup")
+                        .WithMany()
+                        .HasForeignKey("BackupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BackendGobiernoIT.Models.Device", "Device")
+                        .WithMany()
+                        .HasForeignKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Backup");
+
+                    b.Navigation("Device");
                 });
 
             modelBuilder.Entity("BackendGobiernoIT.Models.Case", b =>
@@ -5246,11 +5151,6 @@ namespace BackendGobiernoIT.Migrations
                     b.HasOne("BackendGobiernoIT.Models.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("BackendGobiernoIT.Models.CompanyUser", "CompanyUser")
-                        .WithMany()
-                        .HasForeignKey("CompanyUserId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("BackendCore.Lib.Models.CoreUser", "CreatorUser")
@@ -5313,8 +5213,6 @@ namespace BackendGobiernoIT.Migrations
 
                     b.Navigation("Company");
 
-                    b.Navigation("CompanyUser");
-
                     b.Navigation("CreatorUser");
 
                     b.Navigation("DependantTask");
@@ -5361,15 +5259,7 @@ namespace BackendGobiernoIT.Migrations
                         .WithMany()
                         .HasForeignKey("GroupId");
 
-                    b.HasOne("BackendCore.Lib.Models.GenericListRecord", "Type")
-                        .WithMany()
-                        .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("Group");
-
-                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("BackendGobiernoIT.Models.CompanyManager", b =>
@@ -5453,11 +5343,6 @@ namespace BackendGobiernoIT.Migrations
                         .HasForeignKey("InternalIPMaskId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("BackendGobiernoIT.Models.CompanyUser", "MainUser")
-                        .WithMany()
-                        .HasForeignKey("MainUserId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.HasOne("BackendCore.Lib.Models.GenericListRecord", "Manufacturer")
                         .WithMany()
                         .HasForeignKey("ManufacturerId")
@@ -5511,8 +5396,6 @@ namespace BackendGobiernoIT.Migrations
                     b.Navigation("ExternalIPMask");
 
                     b.Navigation("InternalIPMask");
-
-                    b.Navigation("MainUser");
 
                     b.Navigation("Manufacturer");
 
@@ -5574,12 +5457,8 @@ namespace BackendGobiernoIT.Migrations
                     b.HasOne("BackendCore.Lib.Models.GenericListRecord", "Provider")
                         .WithMany()
                         .HasForeignKey("ProviderId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("BackendCore.Lib.Models.GenericListRecord", "Registrador")
-                        .WithMany()
-                        .HasForeignKey("RegistradorId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Company");
 
@@ -5588,8 +5467,6 @@ namespace BackendGobiernoIT.Migrations
                     b.Navigation("DomainExtension");
 
                     b.Navigation("Provider");
-
-                    b.Navigation("Registrador");
                 });
 
             modelBuilder.Entity("BackendGobiernoIT.Models.EmailDomain", b =>
@@ -5712,14 +5589,7 @@ namespace BackendGobiernoIT.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("BackendCore.Lib.Models.Group", "Group")
-                        .WithMany()
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.Navigation("CertType");
-
-                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("BackendGobiernoIT.Models.Software", b =>
@@ -5749,16 +5619,6 @@ namespace BackendGobiernoIT.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("BackendCore.Lib.Models.Group", "Group")
-                        .WithMany()
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("BackendCore.Lib.Models.GenericListRecord", "Provider")
-                        .WithMany()
-                        .HasForeignKey("ProviderId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.HasOne("BackendGobiernoIT.Models.Software", "Software")
                         .WithMany()
                         .HasForeignKey("SoftwareId")
@@ -5766,10 +5626,6 @@ namespace BackendGobiernoIT.Migrations
                         .IsRequired();
 
                     b.Navigation("Company");
-
-                    b.Navigation("Group");
-
-                    b.Navigation("Provider");
 
                     b.Navigation("Software");
                 });

@@ -1,4 +1,5 @@
 ﻿using BackendCore.Lib.Models;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Numerics;
@@ -13,7 +14,9 @@ public class Company
     [Required]
     public string Name { get; set; }
     public string LegalName { get; set; }
+    public string TypeId { get; set; }
     public int? GroupId { get; set; }
+    public bool HasItSupport { get; set; }
 
     // Relationship with the EmailDomain table
     public virtual ICollection<EmailDomain> EmailDomains { get; set; }
@@ -25,5 +28,8 @@ public class Company
 
     // Relationship with the WorkCenter table
     public virtual ICollection<WorkCenter> WorkCenters { get; set; }
+
+    [DeleteBehavior(DeleteBehavior.NoAction)] public virtual GenericListRecord Type { get; set; }
+
     public virtual Group? Group { get; set; }
 }

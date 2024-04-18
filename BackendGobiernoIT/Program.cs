@@ -1,5 +1,6 @@
 using BackendCore.Lib.Data;
 using BackendCore.Lib.Extensions;
+using BackendCore.Lib.Libraries.ApplicationDomain;
 using BackendCore.Lib.Models;
 using BackendCore.Lib.Services;
 using BackendGobiernoIT.Data;
@@ -9,7 +10,6 @@ using Hangfire;
 var builder = WebApplication.CreateBuilder(args);
 builder.AddBackendCore<ApplicationDbContext, CoreUser, CoreUserManager>(o =>
 {
-    
 });
 var app = builder.Build();
 app.ConfigBackendCore();

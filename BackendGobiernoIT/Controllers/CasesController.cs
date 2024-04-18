@@ -5,6 +5,7 @@ using BackendGobiernoIT.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace BackendGobiernoIT.Controllers;
 
@@ -102,9 +103,23 @@ public class CasesController : ControllerBase
             var _case = await AssertAndGetCase(caseId);
 
             if (!_case.Subtasks.All(k => k.StatusId == "CaseStatusClosed"))
-                return Ok(new ApiResponse { Success = false, Message = $"You can close a case once all of its subtasks have been closed." });
+                return Ok(new ApiResponse { Success = false, Message = $"You can only close a case once all of its subtasks have been closed." });
 
             _case.StatusId = "CaseStatusClosed";
+            _case.EndDate = DateTime.UtcNow;
+            _case.ClosingUserId = HttpContext.User.FindFirstValue("uuid");
+
+            var dependantTasks = await m_DbContext.CaseDependencies
+                .Include(k => k.Source)
+                .Where(k => k.DependsOnId == caseId)
+                .ToListAsync();
+
+            foreach (var dependantTask in dependantTasks)
+            {
+                if (dependantTask.Source.StartDate is null)
+                    dependantTask.Source.StartDate = DateTime.UtcNow;
+            }
+
 
             await m_DbContext.SaveChangesAsync();
 

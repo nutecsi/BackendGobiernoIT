@@ -15,6 +15,7 @@ public class Hosting
     public string ManagementURL { get; set; }
     public string HostingSystemId { get; set; }
     public string ProviderId { get; set;}
+    public DateTime? DeactivationDate { get; set; }
 
     public DateTime? RenovationDate { get; set; }
     public string? Description { get; set; }

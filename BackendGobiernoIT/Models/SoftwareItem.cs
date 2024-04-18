@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BackendCore.Lib.Models;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,8 +15,14 @@ public class SoftwareItem
     public int NumberOfLicences { get; set; }
     public bool Active { get; set; } = true;
 
+    public string? Notes { get; set; }
+    public int? GroupId { get; set; }
+    public string? ProviderId { get; set; }
 
+    [DeleteBehavior(DeleteBehavior.NoAction)] public virtual Group Group { get; set; }
 
+    [DeleteBehavior(DeleteBehavior.NoAction)]
+    public virtual GenericListRecord? Provider { get; set; }
 
     [DeleteBehavior(DeleteBehavior.NoAction)]
     public virtual Company Company { get; set; }

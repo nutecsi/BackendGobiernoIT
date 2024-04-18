@@ -36,6 +36,10 @@ public class Case
     public int? DependantTaskId { get; set; } // Para subtareas, el ID del caso padre
     public virtual ICollection<FollowUp> FollowUps { get; set; }
     public virtual ICollection<Case> Subtasks { get; set; }
+    public int? CompanyUserId { get; set; }
+
+    [ForeignKey("CompanyUserId"), DeleteBehavior(DeleteBehavior.NoAction)]
+    public virtual CompanyUser? CompanyUser { get; set; }
 
     [ForeignKey("StatusId"), DeleteBehavior(DeleteBehavior.NoAction)]
     public virtual GenericListRecord Status { get; set; }

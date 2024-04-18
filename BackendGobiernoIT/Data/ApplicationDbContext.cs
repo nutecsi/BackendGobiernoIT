@@ -33,7 +33,6 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
     public DbSet<Hosting> Hostings { get; set; }
     public DbSet<HostingItem> HostingsInventory { get; set; }
     public DbSet<Backup> Backups { get; set; }
-    public DbSet<BackupDeviceLink> BackupDeviceLinks { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -61,6 +60,10 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
             .Property(b => b.CreationDate)
             .HasDefaultValueSql("GETUTCDATE()");
 
+        modelBuilder.Entity<CompanyUser>()
+            .Property(b => b.External)
+            .HasDefaultValue(false);
+
         modelBuilder.Entity<CompanyManager>()
            .HasOne(cu => cu.CompanyUser)
            .WithMany()
@@ -75,9 +78,6 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
 
         modelBuilder.Entity<DeviceLink>()
            .HasKey(cu => new { cu.SourceDeviceId, cu.DestinationDeviceId });
-
-        modelBuilder.Entity<BackupDeviceLink>()
-            .HasKey(cu => new { cu.BackupId, cu.DeviceId });
 
         modelBuilder.Entity<DeviceLink>()
            .HasOne(cu => cu.SourceDevice)
@@ -318,7 +318,21 @@ public partial class ApplicationDbContext : CoreDbContext<CoreUser>
             new GenericListRecord { Id = "IPMask16", Type = GenericListRecordType.SYSTEM, Text = "16", Category = "IPMask" },
             new GenericListRecord { Id = "IPMask24", Type = GenericListRecordType.SYSTEM, Text = "24", Category = "IPMask" },
             new GenericListRecord { Id = "IPMask28", Type = GenericListRecordType.SYSTEM, Text = "28", Category = "IPMask" },
-            new GenericListRecord { Id = "IPMask32", Type = GenericListRecordType.SYSTEM, Text = "32", Category = "IPMask" }
+            new GenericListRecord { Id = "IPMask32", Type = GenericListRecordType.SYSTEM, Text = "32", Category = "IPMask" },
+
+            // CompanyType
+            new GenericListRecord { Id = "CompanyTypeClient", Type = GenericListRecordType.SYSTEM, Text = "Cliente", Category = "CompanyType" },
+            new GenericListRecord { Id = "CompanyTypeSupplier", Type = GenericListRecordType.SYSTEM, Text = "Proveedor", Category = "CompanyType" },
+            new GenericListRecord { Id = "CompanyTypeClientAndSupplier", Type = GenericListRecordType.SYSTEM, Text = "Cliente y Proveedor", Category = "CompanyType" }
+
             );
+
+        modelBuilder.Entity<Company>()
+            .Property(k => k.TypeId)
+            .HasDefaultValue("CompanyTypeClient");
+
+        modelBuilder.Entity<Company>()
+            .Property(k => k.HasItSupport)
+            .HasDefaultValue(false);
     }
 }

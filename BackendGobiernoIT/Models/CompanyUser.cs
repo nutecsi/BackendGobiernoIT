@@ -1,4 +1,5 @@
 ﻿using BackendCore.Lib.Models;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,6 +11,7 @@ public class CompanyUser
     public int Id { get; set; }
     public int CompanyId { get; set; }
     public DateTime? TerminationDate { get; set; }
+
 
     [Required]
     public string FullName { get; set; }
@@ -26,16 +28,16 @@ public class CompanyUser
 
     [ForeignKey("GenericList")]
     public string? Department { get; set; }
-    
+
     public string? Description { get; set; }
 
     public string? Phone { get; set; } // Format: "country code + number"
 
     public string? Extension { get; set; }
-
+    public bool External { get; set; }
     public int GroupId { get; set; }
+    public DateTime? DeactivationDate { get; set; }
 
-    // Relación con EmailInfo
     public virtual ICollection<EmailInfo> Emails { get; set; }
     public virtual Company Company { get; set; }
     public virtual WorkCenter WorkCenter { get; set; }

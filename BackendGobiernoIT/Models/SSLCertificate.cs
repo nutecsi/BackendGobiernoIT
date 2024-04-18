@@ -14,6 +14,9 @@ public class SSLCertificate
     public string CertTypeId { get; set; }
     public DateTime? RenovationDate { get; set; }
     public int? GroupId { get; set; }    
+    public string? Notes { get; set; }   
 
+    [DeleteBehavior(DeleteBehavior.NoAction)] public virtual Group Group { get; set; }
     [DeleteBehavior(DeleteBehavior.NoAction)] public virtual GenericListRecord CertType { get; set; }
+
 }

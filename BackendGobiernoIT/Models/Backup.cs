@@ -9,6 +9,7 @@ public class Backup
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
+    public int? DeviceId { get; set; }
     public int CompanyId { get; set; }
     public int SoftwareId { get; set; }
 
@@ -16,7 +17,10 @@ public class Backup
     public bool InCloud { get; set; }
     public bool InLocal { get; set; }
     public string? Description { get; set; }
+    public DateTime? DeactivationDate {  get; set; }    
 
     [DeleteBehavior(DeleteBehavior.NoAction)] public virtual Company Company { get; set; }
     [DeleteBehavior(DeleteBehavior.NoAction)] public virtual Software Software { get; set; }
+    [DeleteBehavior(DeleteBehavior.NoAction)] public virtual Device Device { get; set; }
+
 }
